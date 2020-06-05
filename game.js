@@ -8,7 +8,7 @@ class Game {
   }
 
   getRandomCard() {
-    var randomIndex = math.floor(math.random * wholeDeck.length);
+    var randomIndex = Math.floor(Math.random * wholeDeck.length);
   }
 }
 
