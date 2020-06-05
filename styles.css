@@ -1,0 +1,52 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  display: grid;
+  grid-template-rows: 15% 1fr 15%;
+  height: 100vh;
+}
+
+header {
+  grid-area: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+main {
+  grid-row: 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.deck-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 33%;
+}
+
+.card,
+.center-pile {
+  height: 50%;
+  width: 60%;
+  min-width: 300px;
+  min-height: 430px;
+  background: black;
+  border-radius: 5%;
+}
+
+.center-pile {
+  margin-bottom: 2em;
+}
+
+.wins-text {
+  padding-top: 1em;
+}
