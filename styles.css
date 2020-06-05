@@ -13,7 +13,7 @@ header {
   grid-area: 1;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
 }
 
 main {
@@ -33,10 +33,20 @@ main {
   width: 33%;
 }
 
-.card {
+.card,
+.center-pile {
   height: 50%;
   width: 60%;
   min-width: 300px;
   min-height: 430px;
   background: black;
+  border-radius: 5%;
+}
+
+.center-pile {
+  margin-bottom: 2em;
+}
+
+.wins-text {
+  padding-top: 1em;
 }
