@@ -25,6 +25,10 @@ main {
   align-items: center;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 .deck-container {
   display: flex;
   justify-content: center;

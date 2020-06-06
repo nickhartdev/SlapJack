@@ -1,6 +1,6 @@
 var test = new Game();
 
-window.onload = test.dealCards();
+window.onload = gameSetup();
 document.addEventListener('keydown', playerActions);
 
 function playerActions(event) {
@@ -13,4 +13,8 @@ function playerActions(event) {
   } else if (event.key === 'j') {
     test.slap(test.player2);
   }
+}
+
+function gameSetup() {
+  test.dealCards();
 }
