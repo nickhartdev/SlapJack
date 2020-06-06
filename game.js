@@ -73,8 +73,9 @@ class Game {
   playToWin(player) {
     console.log('playToWin');
     if (this.checkCard(this.cardPile[0]) === 'jack') {
-      player.winGame();
       console.log(`${player} wins!`);
+      player.winGame();
+      this.startNewGame();
     } else {
       this.moveCardToBottom(player.hand, this.cardPile);
     }
@@ -88,8 +89,9 @@ class Game {
     if (this.checkCard(this.cardPile[0]) === 'jack') {
       this.shuffleIntoHand(player);
     } else {
-      otherPlayer.winGame();
       console.log(`${otherPlayer} wins!`);
+      otherPlayer.winGame();
+      this.startNewGame();
     }
   }
 
@@ -101,6 +103,13 @@ class Game {
     player.hand = this.shuffleCards(player.hand);
     console.log(this.cardPile);
     console.log(player.hand);
+  }
+
+  startNewGame() {
+    this.player1.hand = [];
+    this.player2.hand = [];
+    this.cardPile = [];
+    this.dealCards();
   }
 
   moveCardToBottom(startingPile, endingPile) {
