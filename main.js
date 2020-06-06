@@ -1,7 +1,7 @@
 var test = new Game();
 
-test.dealCards();
-var buttons = document.addEventListener('keydown', playerActions);
+window.onload = test.dealCards();
+document.addEventListener('keydown', playerActions);
 
 function playerActions(event) {
   if (event.key === 'q') {
