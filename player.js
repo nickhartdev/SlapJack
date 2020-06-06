@@ -12,6 +12,10 @@ class Player {
     return topCard;
   }
 
+  winGame() {
+    this.wins++;
+  }
+
   saveWinsToStorage() {
 
   }

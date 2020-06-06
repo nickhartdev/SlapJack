@@ -1,5 +1,6 @@
 var test = new Game();
 
+test.dealCards();
 var buttons = document.addEventListener('keydown', playerActions);
 
 function playerActions(event) {

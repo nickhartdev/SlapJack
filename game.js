@@ -19,6 +19,8 @@ class Game {
         this.player2.hand.push(shuffledDeck[i]);
       }
     }
+
+    console.log(this.player1.hand);
   }
 
   playCard(player) {
@@ -33,6 +35,7 @@ class Game {
   }
 
   slap(player) {
+    console.log('slap');
     var player1Cards = this.player1.hand.length;
     var player2Cards = this.player2.hand.length;
 
@@ -40,42 +43,54 @@ class Game {
   }
 
   playAsNormal(player) {
+    console.log('playAsNormal')
     if (this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[1])) {
+      console.log('it\'s a pair!');
       this.shuffleIntoHand(player);
     } else if (this.cardPile.length > 2 && this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[2])) {
+      console.log('sandwich!');
       this.shuffleIntoHand(player);
-    } else if (this.checkCard[0] === 'jack') {
+    } else if (this.checkCard(this.cardPile[0]) === 'jack') {
+      console.log('jack!');
       this.shuffleIntoHand(player);
     } else {
-      moveCardToBottom(player.hand, this.cardPile);
+      console.log('illegal slap!');
+      this.moveCardToBottom(player.hand, this.cardPile);
     }
   }
 
   playFinalRound(player) {
+    console.log('playFinalRound');
     var playerHand = player.hand.length;
 
     playerHand === 0 ? this.playToStayInGame() : this.playToWin();
   }
 
   playToWin(player) {
+    console.log('playToWin');
     if (this.checkCard(this.cardPile[0]) === 'jack') {
       this.player.winGame();
     } else {
-      moveCardToBottom(player.hand, this.cardPile);
+      this.moveCardToBottom(player.hand, this.cardPile);
     }
   }
 
   playToStayInGame(player) {
+    console.log('playToStayInGame');
+    var otherPlayer;
+    player === this.player1 ? otherPlayer = this.player2 : otherPlayer = this.player1;
+
     if (this.checkCard(this.cardPile[0]) === 'jack') {
       this.shuffleIntoHand(player);
     } else {
-      this.player.loseGame();
+      otherPlayer.winGame();
     }
   }
 
   shuffleIntoHand(player) {
+    console.log('shuffleIntoHand')
     for (var i = this.cardPile.length; i > 0; i--) {
-      this.moveCardToBottom(this.cardPile, player.hand)
+      this.moveCardToBottom(this.cardPile, player.hand);
     }
     player.hand = this.shuffleCards(player.hand);
     console.log(this.cardPile);
@@ -85,6 +100,8 @@ class Game {
   moveCardToBottom(startingPile, endingPile) {
     var removedCardArray = startingPile.splice(startingPile[0], 1);
     var removedCard = removedCardArray.join('');
+
+    console.log('moveCardToBottom');
 
     endingPile.push(removedCard);
   }
@@ -101,7 +118,7 @@ class Game {
     var randomDeckOrder = this.generateShuffledIndexList(cards);
 
     for (var i = 0; i < cards.length; i++) {
-      shuffledDeck.push(this.deck[randomDeckOrder[i]]);
+      shuffledDeck.push(cards[randomDeckOrder[i]]);
     }
     return shuffledDeck;
   }
