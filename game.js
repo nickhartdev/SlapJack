@@ -1,7 +1,7 @@
 class Game {
   constructor() {
-    this.player1 = new Player(0, []);
-    this.player2 = new Player(0, []);
+    this.player1 = new Player();
+    this.player2 = new Player();
     this.cardPile = [];
     this.deck = ['CA', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'Cjack', 'Cqueen', 'Cking',
     'SA', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'Sjack', 'Squeen', 'Sking' ,'DA', 'D2', 'D3',
@@ -11,31 +11,66 @@ class Game {
 
   shuffleDeck() {
     var shuffledDeck = [];
+    var randomDeckOrder = this.createRandomDeckOrder();
 
     for (var i = 0; i < this.deck.length; i++) {
-      shuffledDeck.push(this.getRandomCard());
+      shuffledDeck.push(this.deck[randomDeckOrder[i]]);
     }
     return shuffledDeck;
   }
 
-  getRandomCard() {
-    var randomIndex = Math.floor(Math.random() * this.deck.length);
-    var randomCard = this.deck[randomIndex];
+  createRandomDeckOrder() {
+    var deckIndexList = [];
+    var deckIndex = 0;
 
-    return randomCard;
+    for (var i = 0; i < this.deck.length; i++) {
+      deckIndexList.push(deckIndex);
+      deckIndex += 1;
+    }
+
+    return this.shuffle(deckIndexList);
+  }
+
+  shuffle(indexList) {
+    var shuffledList = [];
+
+    for (var i = indexList.length; i > 0; i--) {
+      var randomIndex = Math.floor(Math.random() * indexList.length);
+      var randomDeckIndexArray = indexList.splice(randomIndex, 1);
+      var randomDeckIndex = randomDeckIndexArray.join('');
+
+      shuffledList.push(randomDeckIndex);
+    }
+    return shuffledList;
   }
 
   dealCards() {
     for (var i = 0; i < this.deck.length; i++) {
       if (i % 2 === 0) {
-        this.player1.hand.push(this.getRandomCard());
+        this.player1.hand.push(this.deck[i]);
       } else {
-        this.player2.hand.push(this.getRandomCard());
+        this.player2.hand.push(this.deck[i]);
       }
     }
   }
 
   addCard() {
-    this.cardPile.push(this.player1.playCard());
+    this.cardPile.unshift(this.player1.playCard());
+  }
+
+  checkCardValue(card) {
+    var cardValue = card.substring(1, card.length);
+
+    return cardValue;
+  }
+
+  slap(player) {
+    if (this.checkCardValue(this.cardPile[0]) === this.checkCardValue(this.cardPile[1])) {
+      for (var i = 0; i < this.cardPile.length; i++) {
+      return 'It\'s a match!';
+      }
+    } else if (this.checkCardValue(this.cardPile[0]) === this.checkCardValue(this.cardPile[2])) {
+      return 'It\'s a sandwich!';
+    }
   }
 }
