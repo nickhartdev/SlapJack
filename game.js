@@ -24,8 +24,12 @@ class Game {
   }
 
   playCard(player) {
-    this.moveCardToTop(player.hand, this.cardPile);
-    console.log(this.cardPile);
+    if (player.hand.length === 0) {
+      return;
+    } else {
+      this.moveCardToTop(player.hand, this.cardPile);
+      console.log(this.cardPile);
+    }
   }
 
   checkCard(card) {
@@ -63,13 +67,13 @@ class Game {
     console.log('playFinalRound');
     var playerHand = player.hand.length;
 
-    playerHand === 0 ? this.playToStayInGame() : this.playToWin();
+    playerHand === 0 ? this.playToStayInGame(player) : this.playToWin(player);
   }
 
   playToWin(player) {
     console.log('playToWin');
     if (this.checkCard(this.cardPile[0]) === 'jack') {
-      this.player.winGame();
+      player.winGame();
     } else {
       this.moveCardToBottom(player.hand, this.cardPile);
     }
@@ -95,6 +99,7 @@ class Game {
     player.hand = this.shuffleCards(player.hand);
     console.log(this.cardPile);
     console.log(player.hand);
+    console.log(this.player2.hand);
   }
 
   moveCardToBottom(startingPile, endingPile) {
