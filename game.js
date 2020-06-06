@@ -22,7 +22,7 @@ class Game {
   }
 
   playCard(player) {
-    this.cardPile.unshift(player.playCard());
+    this.moveCardToTop(player.hand, this.cardPile);
     console.log(this.cardPile);
   }
 
@@ -47,7 +47,7 @@ class Game {
     } else if (this.checkCard[0] === 'jack') {
       this.shuffleIntoHand(player);
     } else {
-      moveCard(player.hand, this.cardPile);
+      moveCardToBottom(player.hand, this.cardPile);
     }
   }
 
@@ -61,7 +61,7 @@ class Game {
     if (this.checkCard(this.cardPile[0]) === 'jack') {
       this.player.winGame();
     } else {
-      moveCard(player.hand, this.cardPile);
+      moveCardToBottom(player.hand, this.cardPile);
     }
   }
 
@@ -75,18 +75,25 @@ class Game {
 
   shuffleIntoHand(player) {
     for (var i = this.cardPile.length; i > 0; i--) {
-      this.moveCard(this.cardPile, player.hand)
+      this.moveCardToBottom(this.cardPile, player.hand)
     }
     player.hand = this.shuffleCards(player.hand);
     console.log(this.cardPile);
     console.log(player.hand);
   }
 
-  moveCard(startingPile, endingPile) {
+  moveCardToBottom(startingPile, endingPile) {
     var removedCardArray = startingPile.splice(startingPile[0], 1);
     var removedCard = removedCardArray.join('');
 
     endingPile.push(removedCard);
+  }
+
+  moveCardToTop(startingPile, endingPile) {
+    var removedCardArray = startingPile.splice(startingPile[0], 1);
+    var removedCard = removedCardArray.join('');
+
+    endingPile.unshift(removedCard);
   }
 
   shuffleCards(cards) {
