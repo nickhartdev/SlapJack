@@ -48,14 +48,14 @@ class Game {
 
   playAsNormal(player) {
     console.log('playAsNormal')
-    if (this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[1])) {
-      console.log('it\'s a pair!');
+    if (this.checkCard(this.cardPile[0]) === 'jack') {
+      console.log('slapjack!');
+      this.shuffleIntoHand(player);
+    } else if (this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[1])) {
+      console.log('pair!');
       this.shuffleIntoHand(player);
     } else if (this.cardPile.length > 2 && this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[2])) {
       console.log('sandwich!');
-      this.shuffleIntoHand(player);
-    } else if (this.checkCard(this.cardPile[0]) === 'jack') {
-      console.log('jack!');
       this.shuffleIntoHand(player);
     } else {
       console.log('illegal slap!');
@@ -74,6 +74,7 @@ class Game {
     console.log('playToWin');
     if (this.checkCard(this.cardPile[0]) === 'jack') {
       player.winGame();
+      console.log(`${player} wins!`);
     } else {
       this.moveCardToBottom(player.hand, this.cardPile);
     }
@@ -88,6 +89,7 @@ class Game {
       this.shuffleIntoHand(player);
     } else {
       otherPlayer.winGame();
+      console.log(`${otherPlayer} wins!`);
     }
   }
 
@@ -99,14 +101,12 @@ class Game {
     player.hand = this.shuffleCards(player.hand);
     console.log(this.cardPile);
     console.log(player.hand);
-    console.log(this.player2.hand);
   }
 
   moveCardToBottom(startingPile, endingPile) {
+    console.log('moveCardToBottom');
     var removedCardArray = startingPile.splice(startingPile[0], 1);
     var removedCard = removedCardArray.join('');
-
-    console.log('moveCardToBottom');
 
     endingPile.push(removedCard);
   }
