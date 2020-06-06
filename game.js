@@ -23,6 +23,8 @@ class Game {
   }
 
   playCard(player) {
+    this.turnCounter += 1;
+    console.log('you played a card!');
     if (player.hand.length === 0) {
       return;
     } else {
@@ -96,19 +98,19 @@ class Game {
     this.dealCards();
   }
 
-  moveCardToBottom(startingPile, endingPile) {
-    endingPile.push(this.removeCard());
-  }
-
-  moveCardToTop(startingPile, endingPile) {
-    endingPile.unshift(this.removeCard());
-  }
-
-  removeCard() {
-    var removedCardArray = startingPile.splice(startingPile[0], 1);
+  removeCard(startingPile) {
+    var removedCardArray = startingPile.splice(0, 1);
     var removedCard = removedCardArray.join('');
 
     return removedCard;
+  }
+
+  moveCardToBottom(startingPile, endingPile) {
+    endingPile.push(this.removeCard(startingPile));
+  }
+
+  moveCardToTop(startingPile, endingPile) {
+    endingPile.unshift(this.removeCard(startingPile));
   }
 
   shuffleCards(cards) {
