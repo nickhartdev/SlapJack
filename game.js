@@ -9,34 +9,33 @@ class Game {
     'H7', 'H8', 'H9', 'H10', 'Hjack', 'Hqueen', 'Hking'];
   }
 
-  shuffleDeck() {
+  shuffleCards(cards) {
     var shuffledDeck = [];
-    var randomDeckOrder = this.generateShuffledIndexList();
+    var randomDeckOrder = this.generateShuffledIndexList(cards);
 
-    for (var i = 0; i < this.deck.length; i++) {
+    for (var i = 0; i < cards.length; i++) {
       shuffledDeck.push(this.deck[randomDeckOrder[i]]);
     }
     return shuffledDeck;
   }
 
-  generateShuffledIndexList() {
+  generateShuffledIndexList(cards) {
     var deckIndexList = [];
     var deckIndex = 0;
 
-    for (var i = 0; i < this.deck.length; i++) {
+    for (var i = 0; i < cards.length; i++) {
       deckIndexList.push(deckIndex);
       deckIndex += 1;
     }
-
     return this.shuffleIndexOrder(deckIndexList);
   }
 
-  shuffleIndexOrder(deckIndexes) {
+  shuffleIndexOrder(deckIndexList) {
     var shuffledList = [];
 
-    for (var i = deckIndexes.length; i > 0; i--) {
-      var randomIndex = Math.floor(Math.random() * deckIndexes.length);
-      var randomDeckIndexArray = deckIndexes.splice(randomIndex, 1);
+    for (var i = deckIndexList.length; i > 0; i--) {
+      var randomIndex = Math.floor(Math.random() * deckIndexList.length);
+      var randomDeckIndexArray = deckIndexList.splice(randomIndex, 1);
       var randomDeckIndex = randomDeckIndexArray.join('');
 
       shuffledList.push(randomDeckIndex);
@@ -45,7 +44,7 @@ class Game {
   }
 
   dealCards() {
-    var shuffledDeck = this.shuffleDeck();
+    var shuffledDeck = this.shuffleCards(this.deck);
 
     for (var i = 0; i < this.deck.length; i++) {
       if (i % 2 === 0) {
@@ -56,8 +55,9 @@ class Game {
     }
   }
 
-  playCard() {
-    this.cardPile.unshift(this.player1.playCard());
+  playCard(player) {
+    this.cardPile.unshift(player.playCard());
+    console.log(this.cardPile);
   }
 
   checkCard(card) {
@@ -68,11 +68,27 @@ class Game {
 
   slap(player) {
     if (this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[1])) {
+      shuffleIntoHand(player);
       return 'It\'s a match!';
     } else if (this.cardPile.length > 2 && this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[2])) {
+      shuffleIntoHand(player);
       return 'It\'s a sandwich!';
     } else {
       return 'Lol whoops, illegal slap';
     }
+  }
+
+  shuffleIntoHand(player) {
+    for (var i = 0; i < this.cardPile.length; i++) {
+      moveCard(this.cardPile, player.hand)
+    }
+    player.hand = shuffleCards(player.hand);
+  }
+
+  moveCard(startingPile, endingPile) {
+    var removedCardArray = startingPile.splice(startingPile[0], 1);
+    var removedCard = removedCardArray.join('');
+
+    endingPile.push(removedCard);
   }
 }
