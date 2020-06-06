@@ -69,12 +69,12 @@ class Game {
   slap(player) {
     if (this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[1])) {
       this.shuffleIntoHand(player);
-      return 'It\'s a match!';
     } else if (this.cardPile.length > 2 && this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[2])) {
       this.shuffleIntoHand(player);
-      return 'It\'s a sandwich!';
+    } else if (this.checkCard[0] === 'jack') {
+      this.shuffleIntoHand(player);
     } else {
-      return 'Lol whoops, illegal slap';
+      moveCard(player.hand, this.cardPile);
     }
   }
 
