@@ -19,7 +19,7 @@ class Game {
     return shuffledDeck;
   }
 
-  createRandomDeckOrder() {
+  generateDeckOrder() {
     var deckIndexList = [];
     var deckIndex = 0;
 
@@ -31,7 +31,7 @@ class Game {
     return this.shuffle(deckIndexList);
   }
 
-  shuffle(indexList) {
+  shuffleDeckOrder(indexList) {
     var shuffledList = [];
 
     for (var i = indexList.length; i > 0; i--) {
@@ -45,11 +45,13 @@ class Game {
   }
 
   dealCards() {
+    var shuffledDeck = this.shuffleDeck();
+
     for (var i = 0; i < this.deck.length; i++) {
       if (i % 2 === 0) {
-        this.player1.hand.push(this.deck[i]);
+        this.player1.hand.push(shuffledDeck[i]);
       } else {
-        this.player2.hand.push(this.deck[i]);
+        this.player2.hand.push(shuffledDeck[i]);
       }
     }
   }
@@ -58,18 +60,18 @@ class Game {
     this.cardPile.unshift(this.player1.playCard());
   }
 
-  checkCardValue(card) {
+  checkCard(card) {
     var cardValue = card.substring(1, card.length);
 
     return cardValue;
   }
 
   slap(player) {
-    if (this.checkCardValue(this.cardPile[0]) === this.checkCardValue(this.cardPile[1])) {
+    if (this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[1])) {
       for (var i = 0; i < this.cardPile.length; i++) {
       return 'It\'s a match!';
       }
-    } else if (this.checkCardValue(this.cardPile[0]) === this.checkCardValue(this.cardPile[2])) {
+    } else if (this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[2])) {
       return 'It\'s a sandwich!';
     }
   }
