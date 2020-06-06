@@ -9,40 +9,6 @@ class Game {
     'H7', 'H8', 'H9', 'H10', 'Hjack', 'Hqueen', 'Hking'];
   }
 
-  shuffleCards(cards) {
-    var shuffledDeck = [];
-    var randomDeckOrder = this.generateShuffledIndexList(cards);
-
-    for (var i = 0; i < cards.length; i++) {
-      shuffledDeck.push(this.deck[randomDeckOrder[i]]);
-    }
-    return shuffledDeck;
-  }
-
-  generateShuffledIndexList(cards) {
-    var deckIndexList = [];
-    var deckIndex = 0;
-
-    for (var i = 0; i < cards.length; i++) {
-      deckIndexList.push(deckIndex);
-      deckIndex += 1;
-    }
-    return this.shuffleIndexOrder(deckIndexList);
-  }
-
-  shuffleIndexOrder(deckIndexList) {
-    var shuffledList = [];
-
-    for (var i = deckIndexList.length; i > 0; i--) {
-      var randomIndex = Math.floor(Math.random() * deckIndexList.length);
-      var randomDeckIndexArray = deckIndexList.splice(randomIndex, 1);
-      var randomDeckIndex = randomDeckIndexArray.join('');
-
-      shuffledList.push(randomDeckIndex);
-    }
-    return shuffledList;
-  }
-
   dealCards() {
     var shuffledDeck = this.shuffleCards(this.deck);
 
@@ -92,5 +58,47 @@ class Game {
     var removedCard = removedCardArray.join('');
 
     endingPile.push(removedCard);
+  }
+
+  finalSlap(player) {
+    if (this.checkCard[0] === 'jack') {
+      this.shuffleIntoHand(player);
+    } else {
+      player.loseGame(player);
+    }
+  }
+
+  shuffleCards(cards) {
+    var shuffledDeck = [];
+    var randomDeckOrder = this.generateShuffledIndexList(cards);
+
+    for (var i = 0; i < cards.length; i++) {
+      shuffledDeck.push(this.deck[randomDeckOrder[i]]);
+    }
+    return shuffledDeck;
+  }
+
+  generateShuffledIndexList(cards) {
+    var deckIndexList = [];
+    var deckIndex = 0;
+
+    for (var i = 0; i < cards.length; i++) {
+      deckIndexList.push(deckIndex);
+      deckIndex += 1;
+    }
+    return this.shuffleIndexOrder(deckIndexList);
+  }
+
+  shuffleIndexOrder(deckIndexList) {
+    var shuffledList = [];
+
+    for (var i = deckIndexList.length; i > 0; i--) {
+      var randomIndex = Math.floor(Math.random() * deckIndexList.length);
+      var randomDeckIndexArray = deckIndexList.splice(randomIndex, 1);
+      var randomDeckIndex = randomDeckIndexArray.join('');
+
+      shuffledList.push(randomDeckIndex);
+    }
+    return shuffledList;
   }
 }
