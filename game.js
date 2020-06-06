@@ -24,7 +24,6 @@ class Game {
 
   playCard(player) {
     this.turnCounter += 1;
-    console.log('you played a card!');
     if (player.hand.length === 0) {
       return;
     } else {
