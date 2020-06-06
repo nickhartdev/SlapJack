@@ -33,6 +33,13 @@ class Game {
   }
 
   slap(player) {
+    var player1Cards = this.player1.hand.length;
+    var player2Cards = this.player2.hand.length;
+
+    player1Cards > 0 && player2Cards > 0 ? this.playAsNormal(player) : this.playFinalRound(player);
+  }
+
+  playAsNormal(player) {
     if (this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[1])) {
       this.shuffleIntoHand(player);
     } else if (this.cardPile.length > 2 && this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[2])) {
@@ -41,6 +48,28 @@ class Game {
       this.shuffleIntoHand(player);
     } else {
       moveCard(player.hand, this.cardPile);
+    }
+  }
+
+  playFinalRound(player) {
+    var playerHand = player.hand.length;
+
+    playerHand === 0 ? this.playToStayInGame() : this.playToWin();
+  }
+
+  playToWin(player) {
+    if (this.checkCard(this.cardPile[0]) === 'jack') {
+      this.player.winGame();
+    } else {
+      moveCard(player.hand, this.cardPile);
+    }
+  }
+
+  playToStayInGame(player) {
+    if (this.checkCard(this.cardPile[0]) === 'jack') {
+      this.shuffleIntoHand(player);
+    } else {
+      this.player.loseGame();
     }
   }
 
@@ -58,14 +87,6 @@ class Game {
     var removedCard = removedCardArray.join('');
 
     endingPile.push(removedCard);
-  }
-
-  finalSlap(player) {
-    if (this.checkCard[0] === 'jack') {
-      this.shuffleIntoHand(player);
-    } else {
-      player.loseGame(player);
-    }
   }
 
   shuffleCards(cards) {
