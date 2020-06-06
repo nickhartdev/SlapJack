@@ -29,9 +29,16 @@ class Game {
   }
 
   checkCard(card) {
-    var cardValue = card.substring(1, card.length);
+    var cardValue;
 
-    return cardValue;
+    if (card.includes('red') === true) {
+      cardValue = card.substring(11, card.length - 4);
+    } else if (card.includes('blue') === true || card.includes('gold') === true) {
+      cardValue = card.substring(12, card.length - 4);
+    } else if (card.includes('green') === true) {
+      cardValue = card.substring(13, card.length - 4);
+    }
+    console.log(cardValue);
   }
 
   slap(player) {
