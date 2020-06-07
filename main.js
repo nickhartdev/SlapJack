@@ -6,11 +6,11 @@ document.addEventListener('keydown', playerActions);
 function playerActions(event) {
   var gameTurn = game.trackPlayerTurn();
 
-  if (event.key === 'q' && gameTurn === 'player 1') {
+  if (event.key === 'q' && (gameTurn === 'player 1' || game.finalRound === true)) {
     playCard(game.player1);
   } else if (event.key === 'f') {
     slapCard(game.player1);
-  } else if (event.key === 'p' && gameTurn === 'player 2') {
+  } else if (event.key === 'p' && (gameTurn === 'player 2' || game.finalRound === true)) {
     playCard(game.player2)
   } else if (event.key === 'j') {
     slapCard(game.player2);
@@ -45,6 +45,10 @@ function updateDisplay(player) {
   }
 }
 
+function displayWin(player) {
+  changeHeader(`${player.name} wins!`);
+}
+
 function changeHeader(text) {
   var header = document.querySelector('.event-text');
   header.innerHTML = text;
@@ -52,7 +56,7 @@ function changeHeader(text) {
 
 function hideHeader() {
   var header = document.querySelector('.event-text');
-  header.innerHTML = '';
+  hide(header);
 }
 
 function showTopCard() {
@@ -62,7 +66,6 @@ function showTopCard() {
 
 function hideCenterPile() {
   var cardPile = document.querySelector('.card-pile-image');
-
   hide(cardPile);
   cardPile.src = '';
 }
