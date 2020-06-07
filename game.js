@@ -43,15 +43,11 @@ class Game {
   }
 
   checkSlap() {
-    var topCard = game.cardPile[0];
-    var secondCard = game.cardPile[1];
-    var thirdCard = game.cardPile[2];
-
-    if (this.checkCard(topCard) === 'jack') {
+    if (this.checkCard(game.cardPile[0]) === 'jack') {
       return 'jack';
-    } else if (this.checkCard(topCard) === this.checkCard(secondCard)) {
+    } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[1]) {
       return 'pair';
-    } else if (this.checkCard(topCard) === this.checkCard(thirdCard)) {
+    } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[2])) {
       return 'sandwich';
     } else {
       return 'WHOOPS';
