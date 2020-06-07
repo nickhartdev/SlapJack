@@ -106,13 +106,6 @@ class Game {
     player.hand = this.shuffleCards(player.hand);
   }
 
-  startNewGame() {
-    this.player1.hand = [];
-    this.player2.hand = [];
-    this.cardPile = [];
-    this.dealCards();
-  }
-
   removeCard(startingPile) {
     var removedCardArray = startingPile.splice(0, 1);
     var removedCard = removedCardArray.join('');
@@ -126,6 +119,13 @@ class Game {
 
   moveCardToTop(startingPile, endingPile) {
     endingPile.unshift(this.removeCard(startingPile));
+  }
+
+  startNewGame() {
+    this.player1.hand = [];
+    this.player2.hand = [];
+    this.cardPile = [];
+    this.dealCards();
   }
 
   shuffleCards(cards) {
