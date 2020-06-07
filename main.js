@@ -81,20 +81,22 @@ function updatePlayer1CardsLeft() {
   var player1Cards = document.querySelector('.number-of-cards1');
 
   player1Cards.innerHTML = game.player1.hand.length;
+  checkIfNoCards(game.player1, '.player-1-deck');
 }
 
 function updatePlayer2CardsLeft() {
   var player2Cards = document.querySelector('.number-of-cards2');
 
   player2Cards.innerHTML = game.player2.hand.length;
+  checkIfNoCards(game.player2, '.player-2-deck');
 }
 
-function checkIfNoCards() {
-  var playerDeck = document.querySelector('.deck');
-  var playerHand = game.player.hand.length;
+function checkIfNoCards(player, deck) {
+  var playerDeck = document.querySelector(deck);
+  var playerHand = player.hand.length;
 
   if (playerHand === 0) {
-    hide(deck);
+    hide(playerDeck);
   }
 }
 
