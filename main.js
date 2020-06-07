@@ -25,6 +25,7 @@ function playCard(player) {
 }
 
 function slapCard(player) {
+  updateDisplay(player);
   game.slap(player);
 }
 
@@ -33,13 +34,13 @@ function updateDisplay(player) {
     changeHeader(`SLAPJACK! ${player.name} takes the pile!`);
     hideCenterPile();
   } else if (game.checkSlap() === 'pair') {
-    changeHeader('Pair!');
+    changeHeader(`Pair! ${player.name} takes the pile!`);
     hideCenterPile();
   } else if (game.checkSlap() === 'sandwich') {
-    changeHeader('Sandwich!');
+    changeHeader(`Sandwich! ${player.name} takes the pile!`);
     hideCenterPile();
   } else if (game.checkSlap() === 'WHOOPS') {
-    changeHeader('WHOOPS');
+    changeHeader(`Whoops! ${player.name} puts a card at the bottom of the pile!`);
   }
 }
 

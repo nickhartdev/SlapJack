@@ -1,7 +1,7 @@
 class Game {
   constructor() {
-    this.player1 = new Player();
-    this.player2 = new Player();
+    this.player1 = new Player('Player 1');
+    this.player2 = new Player('Player 2');
     this.cardPile = [];
     this.turnCounter = 0;
     this.finalRound = false;
