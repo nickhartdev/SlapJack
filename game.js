@@ -4,6 +4,7 @@ class Game {
     this.player2 = new Player();
     this.cardPile = [];
     this.turnCounter = 0;
+    this.finalRound = false;
     this.deck = deck;
   }
 
@@ -57,11 +58,21 @@ class Game {
     }
   }
 
-  checkIfFinalRound(player) {
+  trackPlayerTurn() {
     var player1Cards = this.player1.hand.length;
     var player2Cards = this.player2.hand.length;
 
-    player1Cards > 0 && player2Cards > 0 ? this.playAsNormal(player) : this.playFinalRound(player);
+    if (player1Cards === 0 || player2Cards === 0) {
+      this.finalRound = true;
+    } else if (this.turnCounter % 2 === 0) {
+      return 'player 1';
+    } else if (this.turnCounter % 2 != 0) {
+      return 'player 2';
+    }
+  }
+
+  checkIfFinalRound(player) {
+    this.finalRound === true ? this.playAsNormal(player) : this.playFinalRound(player);
   }
 
   playAsNormal(player) {
@@ -120,19 +131,6 @@ class Game {
 
   moveCardToTop(startingPile, endingPile) {
     endingPile.unshift(this.removeCard(startingPile));
-  }
-
-  trackPlayerTurn() {
-    var player1Cards = this.player1.hand.length;
-    var player2Cards = this.player2.hand.length;
-
-    if (player1Cards === 0 || player2Cards === 0) {
-      return 'final round';
-    } else if (this.turnCounter % 2 === 0) {
-      return 'player 1';
-    } else if (this.turnCounter % 2 != 0) {
-      return 'player 2';
-    }
   }
 
   // startNewGame() {
