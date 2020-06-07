@@ -17,6 +17,7 @@ function playerActions(event) {
 
 function playCard(player) {
   game.playCard(player);
+  hideHeader();
   unhideCenterPile();
   showTopCard();
 }
@@ -38,14 +39,6 @@ function slapCard(player) {
     game.checkIfFinalRound(player);
     changeHeader('WHOOPS');
   }
-}
-
-function hide(element) {
-  element.classList.add('hidden');
-}
-
-function unhide(element) {
-  element.classList.remove('hidden');
 }
 
 function changeHeader(text) {
@@ -73,4 +66,12 @@ function collectCenterPile() {
 function unhideCenterPile() {
   var cardPile = document.querySelector('.card-pile-image');
   unhide(cardPile);
+}
+
+function hide(element) {
+  element.classList.add('hidden');
+}
+
+function unhide(element) {
+  element.classList.remove('hidden');
 }
