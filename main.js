@@ -1,6 +1,6 @@
 var game = new Game();
 
-window.onload = gameSetup();
+window.onload = game.dealCards();
 document.addEventListener('keydown', playerActions);
 
 function playerActions(event) {
@@ -13,10 +13,6 @@ function playerActions(event) {
   } else if (event.key === 'j') {
     slapCard(game.player2);
   }
-}
-
-function gameSetup() {
-  game.dealCards();
 }
 
 function playCard(player) {
@@ -44,9 +40,22 @@ function slapCard(player) {
   }
 }
 
+function hide(element) {
+  element.classList.add('hidden');
+}
+
+function unhide(element) {
+  element.classList.remove('hidden');
+}
+
 function changeHeader(text) {
   var header = document.querySelector('.event-text');
   header.innerHTML = text;
+}
+
+function hideHeader() {
+  var header = document.querySelector('.event-text');
+  header.innerHTML = '';
 }
 
 function showTopCard() {
@@ -56,11 +65,12 @@ function showTopCard() {
 
 function collectCenterPile() {
   var cardPile = document.querySelector('.card-pile-image');
-  cardPile.classList.add('hidden');
-  cardPile.src = "";
+
+  hide(cardPile);
+  cardPile.src = '';
 }
 
 function unhideCenterPile() {
   var cardPile = document.querySelector('.card-pile-image');
-  cardPile.classList.remove('hidden');
+  unhide(cardPile);
 }
