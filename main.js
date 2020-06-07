@@ -68,6 +68,15 @@ function unhideCenterPile() {
   unhide(cardPile);
 }
 
+function checkIfNoCards() {
+  var playerDeck = document.querySelector('.deck');
+  var playerHand = game.player.hand.length;
+
+  if (playerHand === 0) {
+    hide(deck);
+  }
+}
+
 function hide(element) {
   element.classList.add('hidden');
 }
