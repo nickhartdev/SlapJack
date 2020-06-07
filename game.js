@@ -45,7 +45,7 @@ class Game {
   checkSlap() {
     if (this.checkCard(game.cardPile[0]) === 'jack') {
       return 'jack';
-    } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[1]) {
+    } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[1])) {
       return 'pair';
     } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[2])) {
       return 'sandwich';

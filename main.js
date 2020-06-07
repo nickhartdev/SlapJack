@@ -25,16 +25,16 @@ function playCard(player) {
 }
 
 function slapCard(player) {
+  var slapRule = game.checkSlap();
+  game.slap(player);
+
   if (game.checkSlap() === 'jack') {
-    game.slap(player);
     changeHeader('SlapJack!');
     collectCenterPile();
   } else if (game.checkSlap() === 'pair') {
-    game.slap(player);
     changeHeader('Pair!');
     collectCenterPile();
   } else if (game.checkSlap() === 'sandwich') {
-    game.slap(player);
     changeHeader('Sandwich!');
     collectCenterPile();
   } else if (game.checkSlap() === 'WHOOPS') {
