@@ -81,7 +81,8 @@ class Game {
   playToWin(player) {
     if (this.checkCard(this.cardPile[0]) === 'jack') {
       player.winGame();
-      this.startNewGame();
+      this.shuffleIntoHand(player);
+      // this.startNewGame();
     } else {
       this.moveCardToBottom(player.hand, this.cardPile);
     }
@@ -95,7 +96,7 @@ class Game {
       this.shuffleIntoHand(player);
     } else {
       otherPlayer.winGame();
-      this.startNewGame();
+      // this.startNewGame();
     }
   }
 
@@ -134,12 +135,12 @@ class Game {
     }
   }
 
-  startNewGame() {
-    this.player1.hand = [];
-    this.player2.hand = [];
-    this.cardPile = [];
-    this.dealCards();
-  }
+  // startNewGame() {
+  //   this.player1.hand = [];
+  //   this.player2.hand = [];
+  //   this.cardPile = [];
+  //   this.dealCards();
+  // }
 
   shuffleCards(cards) {
     var shuffledDeck = [];
