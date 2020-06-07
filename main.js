@@ -22,6 +22,7 @@ function playCard(player) {
   hideHeader();
   showCenterPile();
   showTopCard();
+  checkIfNoCards(player);
 }
 
 function slapCard(player) {
@@ -71,12 +72,15 @@ function showCenterPile() {
   unhide(cardPile);
 }
 
-function checkIfNoCards(player, deck) {
-  var playerDeck = document.querySelector(deck);
+function checkIfNoCards(player) {
+  var player1Deck = document.querySelector('.player-1-deck');
+  var player2Deck = document.querySelector('.player-2-deck');
   var playerHand = player.hand.length;
 
-  if (playerHand === 0) {
-    hide(playerDeck);
+  if (player === game.player1 && playerHand === 0) {
+    hide(player1Deck);
+  } else if (player === game.player2 && playerHand === 0) {
+    hide(player2Deck)
   }
 }
 
