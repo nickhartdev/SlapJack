@@ -21,15 +21,26 @@ function gameSetup() {
 
 function playCard(player) {
   game.playCard(player);
-  showTopCard();
   unhideCenterPile();
+  showTopCard();
 }
 
 function slapCard(player) {
   if (game.checkSlap() === 'jack') {
-    game.slap(player);
+    game.checkIfFinalRound(player);
     changeHeader('SlapJack!');
     collectCenterPile();
+  } else if (game.checkSlap() === 'pair') {
+    game.checkIfFinalRound(player);
+    changeHeader('Pair!');
+    collectCenterPile();
+  } else if (game.checkSlap() === 'sandwich') {
+    game.checkIfFinalRound(player);
+    changeHeader('Sandwich!');
+    collectCenterPile();
+  } else if (game.checkSlap() === 'WHOOPS') {
+    game.checkIfFinalRound(player);
+    changeHeader('WHOOPS');
   }
 }
 
@@ -44,11 +55,12 @@ function showTopCard() {
 }
 
 function collectCenterPile() {
-  var centerPileContainer = document.querySelector('.card-pile');
-  centerPileContainer.classList.add('hidden');
+  var cardPile = document.querySelector('.card-pile-image');
+  cardPile.classList.add('hidden');
+  cardPile.src = "";
 }
 
 function unhideCenterPile() {
-  var centerPileContainer = document.querySelector('.card-pile');
-  centerPileContainer.classList.remove('hidden');
+  var cardPile = document.querySelector('.card-pile-image');
+  cardPile.classList.remove('hidden');
 }

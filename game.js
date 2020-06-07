@@ -57,7 +57,7 @@ class Game {
     }
   }
 
-  slap(player) {
+  checkIfFinalRound(player) {
     var player1Cards = this.player1.hand.length;
     var player2Cards = this.player2.hand.length;
 
