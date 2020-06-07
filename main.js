@@ -16,6 +16,12 @@ function playerActions(event) {
 }
 
 function playCard(player) {
+  if (player === game.player1) {
+    updatePlayer1CardsLeft();
+  } else {
+    updatePlayer2CardsLeft();
+  }
+  checkIfNoCards();
   game.playCard(player);
   hideHeader();
   unhideCenterPile();
@@ -39,6 +45,8 @@ function slapCard(player) {
     game.checkIfFinalRound(player);
     changeHeader('WHOOPS');
   }
+  updatePlayer1CardsLeft();
+  updatePlayer2CardsLeft();
 }
 
 function changeHeader(text) {
@@ -66,6 +74,18 @@ function collectCenterPile() {
 function unhideCenterPile() {
   var cardPile = document.querySelector('.card-pile-image');
   unhide(cardPile);
+}
+
+function updatePlayer1CardsLeft() {
+  var player1Cards = document.querySelector('.number-of-cards1');
+
+  player1Cards.innerHTML = game.player1.hand.length;
+}
+
+function updatePlayer2CardsLeft() {
+  var player2Cards = document.querySelector('.number-of-cards2');
+
+  player2Cards.innerHTML = game.player2.hand.length;
 }
 
 function checkIfNoCards() {
