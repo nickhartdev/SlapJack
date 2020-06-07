@@ -4,11 +4,13 @@ window.onload = game.dealCards();
 document.addEventListener('keydown', playerActions);
 
 function playerActions(event) {
-  if (event.key === 'q' && game.turnCounter % 2 === 0) {
+  var gameTurn = game.trackPlayerTurn();
+
+  if (event.key === 'q' && (gameTurn === 'player 1' || gameTurn === 'final round')) {
     playCard(game.player1);
   } else if (event.key === 'f') {
     slapCard(game.player1);
-  } else if (event.key === 'p' && game.turnCounter % 2 != 0) {
+  } else if (event.key === 'p' && (gameTurn === 'player 2' || gameTurn === 'final round')) {
     playCard(game.player2)
   } else if (event.key === 'j') {
     slapCard(game.player2);
@@ -21,7 +23,6 @@ function playCard(player) {
   } else {
     updatePlayer2CardsLeft();
   }
-  checkIfNoCards();
   game.playCard(player);
   hideHeader();
   unhideCenterPile();

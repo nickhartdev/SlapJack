@@ -121,6 +121,19 @@ class Game {
     endingPile.unshift(this.removeCard(startingPile));
   }
 
+  trackPlayerTurn() {
+    var player1Cards = this.player1.hand.length;
+    var player2Cards = this.player2.hand.length;
+
+    if (player1Cards === 0 || player2Cards === 0) {
+      return 'final round';
+    } else if (this.turnCounter % 2 === 0) {
+      return 'player 1';
+    } else if (this.turnCounter % 2 != 0) {
+      return 'player 2';
+    }
+  }
+
   startNewGame() {
     this.player1.hand = [];
     this.player2.hand = [];
