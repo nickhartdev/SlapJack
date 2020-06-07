@@ -38,7 +38,23 @@ class Game {
     } else if (card.includes('green') === true) {
       cardValue = card.substring(13, card.length - 4);
     }
-    console.log(cardValue);
+    return cardValue;
+  }
+
+  checkSlap() {
+    var topCard = game.cardPile[0];
+    var secondCard = game.cardPile[1];
+    var thirdCard = game.cardPile[2];
+
+    if (this.checkCard(topCard) === 'jack') {
+      return 'jack';
+    } else if (this.checkCard(topCard) === this.checkCard(secondCard)) {
+      return 'pair';
+    } else if (this.checkCard(topCard) === this.checkCard(thirdCard)) {
+      return 'sandwich';
+    } else {
+      return 'WHOOPS';
+    }
   }
 
   slap(player) {
@@ -49,14 +65,10 @@ class Game {
   }
 
   playAsNormal(player) {
-    if (this.checkCard(this.cardPile[0]) === 'jack') {
-      this.shuffleIntoHand(player);
-    } else if (this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[1])) {
-      this.shuffleIntoHand(player);
-    } else if (this.cardPile.length > 2 && this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[2])) {
-      this.shuffleIntoHand(player);
-    } else {
+    if (this.checkSlap() === 'WHOOPS') {
       this.moveCardToBottom(player.hand, this.cardPile);
+    } else {
+      this.shuffleIntoHand(player);
     }
   }
 

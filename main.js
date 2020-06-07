@@ -1,33 +1,54 @@
-var test = new Game();
+var game = new Game();
 
 window.onload = gameSetup();
 document.addEventListener('keydown', playerActions);
 
 function playerActions(event) {
-  if (event.key === 'q' && test.turnCounter % 2 === 0) {
-    playCard(test.player1);
+  if (event.key === 'q' && game.turnCounter % 2 === 0) {
+    playCard(game.player1);
   } else if (event.key === 'f') {
-    test.slap(test.player1);
-  } else if (event.key === 'p' && test.turnCounter % 2 != 0) {
-    test.playCard(test.player2);
+    slapCard(game.player1);
+  } else if (event.key === 'p' && game.turnCounter % 2 != 0) {
+    playCard(game.player2)
   } else if (event.key === 'j') {
-    test.slap(test.player2);
+    slapCard(game.player2);
   }
 }
 
 function gameSetup() {
-  test.dealCards();
+  game.dealCards();
 }
 
 function playCard(player) {
-  test.playCard(player);
+  game.playCard(player);
   showTopCard();
+  unhideCenterPile();
+}
+
+function slapCard(player) {
+  if (game.checkSlap() === 'jack') {
+    game.slap(player);
+    changeHeader('SlapJack!');
+    collectCenterPile();
+  }
+}
+
+function changeHeader(text) {
+  var header = document.querySelector('.event-text');
+  header.innerHTML = text;
 }
 
 function showTopCard() {
-  var centerPileContainer = document.querySelector('.card-pile');
   var cardPileImage = document.querySelector('.card-pile-image');
+  cardPileImage.src = game.cardPile[0];
+}
 
+function collectCenterPile() {
+  var centerPileContainer = document.querySelector('.card-pile');
+  centerPileContainer.classList.add('hidden');
+}
+
+function unhideCenterPile() {
+  var centerPileContainer = document.querySelector('.card-pile');
   centerPileContainer.classList.remove('hidden');
-  cardPileImage.src = test.cardPile[0];
 }
