@@ -1,9 +1,13 @@
 var game = new Game();
 
-window.onload = game.dealCards();
+window.onload = gameSetup();
 document.addEventListener('keydown', playerActions);
 
 function playerActions(event) {
+  game.gameOver === false ? playGame(event) : startNewGame(event);
+}
+
+function playGame(event) {
   var gameTurn = game.trackPlayerTurn();
 
   if (event.key === 'q' && (gameTurn === 'player 1' || game.finalRound === true)) {
@@ -15,6 +19,19 @@ function playerActions(event) {
   } else if (event.key === 'j') {
     slapCard(game.player2);
   }
+}
+
+function startNewGame(event) {
+  var gameControls = ['q', 'f', 'j', 'p'];
+
+  if (gameControls.includes(event.key)) {
+    game.startNewGame();
+  }
+}
+
+function gameSetup() {
+  game.dealCards();
+  updateWinDisplay();
 }
 
 function playCard(player) {
@@ -53,11 +70,21 @@ function updateFinalDisplay(player) {
     hideCenterPile();
   } else if (game.checkSlap() === 'jack' && player.hand.length > 0) {
     changeHeader(`SLAPJACK! ${player.name} wins the game!`);
+    updateWinDisplay();
   } else if (game.checkSlap() != 'jack' && player.hand.length === 0) {
     changeHeader(`Oh no! ${player.name} lost this round!`);
+    updateWinDisplay();
   } else if (game.checkSlap() != 'jack' && player.hand.length > 0) {
     changeHeader(`Oh no! ${player.name} puts a card at the bottom of the pile!`);
   }
+}
+
+function updateWinDisplay() {
+  var player1WinText = document.querySelector('.player-1-wins');
+  var player2WinText = document.querySelector('.player-2-wins');
+
+  player1WinText.innerHTML = game.player1.wins + ' wins';
+  player2WinText.innerHTML = game.player2.wins + ' wins';
 }
 
 function changeHeader(text) {
