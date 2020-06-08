@@ -26,11 +26,12 @@ function playCard(player) {
 }
 
 function slapCard(player) {
-  updateDisplay(player);
+  showHeader();
+  game.finalRound === true ? updateFinalDisplay(player) : updateNormalDisplay(player);
   game.slap(player);
 }
 
-function updateDisplay(player) {
+function updateNormalDisplay(player) {
   if (game.checkSlap() === 'jack') {
     changeHeader(`SLAPJACK! ${player.name} takes the pile!`);
     hideCenterPile();
@@ -45,8 +46,16 @@ function updateDisplay(player) {
   }
 }
 
-function displayWin(player) {
-  changeHeader(`${player.name} wins!`);
+function updateFinalDisplay(player) {
+  if (game.checkSlap() === 'jack' && player.hand.length === 0) {
+    changeHeader(`SLAPJACK! ${player.name} is back in the game!`);
+  } else if (game.checkSlap() === 'jack' && player.hand.length > 0) {
+    changeHeader(`SLAPJACK! ${player.name} wins the game!`);
+  } else if (game.checkSlap() != 'jack' && player.hand.length === 0) {
+    changeHeader(`Oh no! ${player.name} lost this round!`);
+  } else if (game.checkSlap() != 'jack' && player.hand.length > 0) {
+    changeHeader(`Oh no! ${player.name} puts a card at the bottom of the pile!`);
+  }
 }
 
 function changeHeader(text) {
@@ -57,6 +66,11 @@ function changeHeader(text) {
 function hideHeader() {
   var header = document.querySelector('.event-text');
   hide(header);
+}
+
+function showHeader() {
+  var header = document.querySelector('.event-text');
+  unhide(header);
 }
 
 function showTopCard() {

@@ -100,6 +100,7 @@ class Game {
 
     if (this.checkCard(this.cardPile[0]) === 'jack') {
       this.shuffleIntoHand(player);
+      return 'player stays in'
     } else {
       otherPlayer.winGame();
     }
