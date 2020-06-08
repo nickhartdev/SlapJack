@@ -49,11 +49,11 @@ main {
 }
 
 .player-1-deck {
-  box-shadow: 0px 0px 40px royalblue;
+  box-shadow: 0px 0px 40px rgba(34,195,195,1);
 }
 
 .player-2-deck {
-  box-shadow: 0px 0px 40px orange;
+  box-shadow: 0px 0px 40px rgba(253,187,45,1);
 }
 
 .card-pile {
