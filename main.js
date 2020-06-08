@@ -27,8 +27,10 @@ function gameSetup() {
 }
 
 function startNewGame(event) {
-  game.startNewGame();
-  newGameDisplay();
+  if (event.key === ' ') {
+    game.startNewGame();
+    newGameDisplay();
+  }
 }
 
 function playCard(player) {
