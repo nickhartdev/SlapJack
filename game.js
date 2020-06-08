@@ -88,7 +88,6 @@ class Game {
 
   playToWin(player) {
     if (this.checkCard(this.cardPile[0]) === 'jack') {
-      player.winGame();
       this.shuffleIntoHand(player);
       this.gameOver = true;
     } else {
@@ -97,13 +96,10 @@ class Game {
   }
 
   playToStayInGame(player) {
-    var otherPlayer;
-    player === this.player1 ? otherPlayer = this.player2 : otherPlayer = this.player1;
-
     if (this.checkCard(this.cardPile[0]) === 'jack') {
       this.shuffleIntoHand(player);
+      this.finalRound = false;
     } else {
-      otherPlayer.winGame();
       this.gameOver = true;
     }
   }
@@ -134,6 +130,7 @@ class Game {
     this.player1.hand = [];
     this.player2.hand = [];
     this.cardPile = [];
+    this.finalRound = false;
     this.gameOver = false;
     this.dealCards();
   }

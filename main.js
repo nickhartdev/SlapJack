@@ -67,13 +67,26 @@ function updateFinalDisplay(player) {
     hideCenterPile();
   } else if (game.checkSlap() === 'jack' && player.hand.length > 0) {
     changeHeader(`SLAPJACK! ${player.name} wins the game!`);
-    updateWinDisplay();
+    displayPlayerWin(player);
   } else if (game.checkSlap() != 'jack' && player.hand.length === 0) {
     changeHeader(`Oh no! ${player.name} lost this round!`);
-    updateWinDisplay();
+    displayPlayerLoss(player);
   } else if (game.checkSlap() != 'jack' && player.hand.length > 0) {
     changeHeader(`Oh no! ${player.name} puts a card at the bottom of the pile!`);
   }
+}
+
+function displayPlayerWin(player) {
+  player.winGame();
+  updateWinDisplay();
+}
+
+function displayPlayerLoss(player) {
+  var otherPlayer;
+  player === game.player1 ? otherPlayer = game.player2 : otherPlayer = game.player1;
+
+  otherPlayer.winGame();
+  updateWinDisplay();
 }
 
 function newGameDisplay() {
@@ -89,6 +102,7 @@ function newGameDisplay() {
 function updateWinDisplay() {
   var player1WinText = document.querySelector('.player-1-wins');
   var player2WinText = document.querySelector('.player-2-wins');
+  console.log('test');
 
   player1WinText.innerHTML = game.player1.wins + ' wins';
   player2WinText.innerHTML = game.player2.wins + ' wins';
