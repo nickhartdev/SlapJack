@@ -49,6 +49,8 @@ function updateNormalDisplay(player) {
 function updateFinalDisplay(player) {
   if (game.checkSlap() === 'jack' && player.hand.length === 0) {
     changeHeader(`SLAPJACK! ${player.name} is back in the game!`);
+    showDeck(player);
+    hideCenterPile();
   } else if (game.checkSlap() === 'jack' && player.hand.length > 0) {
     changeHeader(`SLAPJACK! ${player.name} wins the game!`);
   } else if (game.checkSlap() != 'jack' && player.hand.length === 0) {
@@ -98,6 +100,18 @@ function checkIfNoCards(player) {
     hide(player1Deck);
   } else if (player === game.player2 && playerHand === 0) {
     hide(player2Deck)
+  }
+}
+
+function showDeck(player) {
+  var player1Deck = document.querySelector('.player-1-deck');
+  var player2Deck = document.querySelector('.player-2-deck');
+  var playerHand = player.hand.length;
+
+  if (player === game.player1 && playerHand === 0) {
+    unhide(player1Deck);
+  } else if (player === game.player2 && playerHand === 0) {
+    unhide(player2Deck);
   }
 }
 
