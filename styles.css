@@ -10,7 +10,7 @@ body {
   grid-template-rows: 15% 1fr 15%;
   height: 100vh;
   font-family: 'Lato', sans-serif;
-  background: linear-gradient(rgba(253,187,45,1), rgba(255,255,255,1), rgba(34,195,195,1));
+  background: linear-gradient(rgba(253,187,45,0.75), rgba(34,195,195,0.75));
 }
 
 header {
@@ -48,11 +48,14 @@ main {
   min-width: 275px;
   min-height: 475px;
   border-radius: 5%;
-  box-shadow: 0px 0px 20px black;
 }
 
 .player-1-deck {
+  box-shadow: 0px 0px 40px royalblue;
+}
 
+.player-2-deck {
+  box-shadow: 0px 0px 40px orange;
 }
 
 .card-pile {

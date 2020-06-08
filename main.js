@@ -39,6 +39,7 @@ function playCard(player) {
   showCenterPile();
   showTopCard();
   checkIfNoCards(player);
+  addBorderToPile(player);
 }
 
 function slapCard(player) {
@@ -75,6 +76,18 @@ function updateFinalDisplay(player) {
     displayPlayerLoss(player);
   } else if (game.checkSlap() != 'jack' && player.hand.length > 0) {
     changeHeader(`Oh no! ${player.name} puts a card at the bottom of the pile!`);
+  }
+}
+
+function addBorderToPile(player) {
+  var centerPile = document.querySelector('.card-pile-image');
+
+  if (player === game.player1) {
+    centerPile.classList.add('player-1-deck');
+    centerPile.classList.remove('player-2-deck');
+  } else {
+    centerPile.classList.add('player-2-deck');
+    centerPile.classList.remove('player-1-deck');
   }
 }
 
