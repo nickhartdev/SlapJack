@@ -134,6 +134,7 @@ class Game {
     this.player1.hand = [];
     this.player2.hand = [];
     this.cardPile = [];
+    this.gameOver = false;
     this.dealCards();
   }
 

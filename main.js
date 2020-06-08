@@ -21,17 +21,14 @@ function playGame(event) {
   }
 }
 
-function startNewGame(event) {
-  var gameControls = ['q', 'f', 'j', 'p'];
-
-  if (gameControls.includes(event.key)) {
-    game.startNewGame();
-  }
-}
-
 function gameSetup() {
   game.dealCards();
   updateWinDisplay();
+}
+
+function startNewGame(event) {
+  game.startNewGame();
+  newGameDisplay();
 }
 
 function playCard(player) {
@@ -77,6 +74,16 @@ function updateFinalDisplay(player) {
   } else if (game.checkSlap() != 'jack' && player.hand.length > 0) {
     changeHeader(`Oh no! ${player.name} puts a card at the bottom of the pile!`);
   }
+}
+
+function newGameDisplay() {
+  var player1Deck = document.querySelector('.player-1-deck');
+  var player2Deck = document.querySelector('.player-2-deck');
+
+  unhide(player1Deck);
+  unhide(player2Deck);
+  hideCenterPile();
+  hideHeader();
 }
 
 function updateWinDisplay() {
