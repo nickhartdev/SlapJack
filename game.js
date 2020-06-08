@@ -135,6 +135,15 @@ class Game {
     this.dealCards();
   }
 
+  saveWins() {
+    game.player1.saveWinsToStorage(game.player1);
+    game.player2.saveWinsToStorage(game.player2);
+  }
+
+  retrieveWins(player) {
+    player.wins = player.retrieveWins(player);
+  }
+
   shuffleCards(cards) {
     var shuffledDeck = [];
     var randomDeckOrder = this.generateShuffledIndexList(cards);

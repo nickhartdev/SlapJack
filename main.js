@@ -80,6 +80,7 @@ function updateFinalDisplay(player) {
 
 function displayPlayerWin(player) {
   player.winGame();
+  game.saveWins();
   updateWinDisplay();
   hideCenterPile();
 }
@@ -89,6 +90,7 @@ function displayPlayerLoss(player) {
   player === game.player1 ? otherPlayer = game.player2 : otherPlayer = game.player1;
 
   otherPlayer.winGame();
+  game.saveWins();
   updateWinDisplay();
 }
 
@@ -105,10 +107,16 @@ function newGameDisplay() {
 function updateWinDisplay() {
   var player1WinText = document.querySelector('.player-1-wins');
   var player2WinText = document.querySelector('.player-2-wins');
-  console.log('test');
+  var player1Wins = game.player1.retrieveWins('Player 1 wins');
+  var player2Wins = game.player2.retrieveWins('Player 2 wins');
 
-  player1WinText.innerHTML = game.player1.wins + ' wins';
-  player2WinText.innerHTML = game.player2.wins + ' wins';
+  if (player1Wins === null || player2Wins === null) {
+    player1WinText.innerHTML = '0 wins';
+    player2WinText.innerHTML = '0 wins';
+  } else {
+    player1WinText.innerHTML = player1Wins + ' wins';
+    player2WinText.innerHTML = player2Wins + ' wins';
+  }
 }
 
 function changeHeader(text) {
