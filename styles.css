@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Lato&display=swap');
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -7,7 +9,8 @@ body {
   display: grid;
   grid-template-rows: 15% 1fr 15%;
   height: 100vh;
-  background: grey;
+  font-family: 'Lato', sans-serif;
+  background: linear-gradient(rgba(253,187,45,0.75), rgba(34,195,195,0.75));
 }
 
 header {
@@ -40,15 +43,21 @@ main {
 
 .deck,
 .card-pile {
-  height: 50%;
-  width: 60%;
-  min-width: 275px;
-  min-height: 475px;
+  width: 275px;
+  height: 475px;
   border-radius: 5%;
 }
 
+.player-1-deck {
+  box-shadow: 0px 0px 40px rgba(34,195,195,1);
+}
+
+.player-2-deck {
+  box-shadow: 0px 0px 40px rgba(253,187,45,1);
+}
+
 .card-pile {
-  margin-bottom: 2em;
+  margin-bottom: 3em;
 }
 
 .deck > img,
@@ -59,5 +68,6 @@ main {
 }
 
 .wins-text {
+  font-size: 1.5em;
   padding-top: 1em;
 }
