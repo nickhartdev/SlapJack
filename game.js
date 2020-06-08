@@ -1,13 +1,12 @@
 class Game {
   constructor() {
-    this.player1 = new Player();
-    this.player2 = new Player();
+    this.player1 = new Player('Player 1');
+    this.player2 = new Player('Player 2');
     this.cardPile = [];
     this.turnCounter = 0;
-    this.deck = ['CA', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9', 'C10', 'Cjack', 'Cqueen', 'Cking',
-    'SA', 'S2', 'S3', 'S4', 'S5', 'S6', 'S7', 'S8', 'S9', 'S10', 'Sjack', 'Squeen', 'Sking' ,'DA', 'D2', 'D3',
-    'D4', 'D5', 'D6', 'D7', 'D8', 'D9', 'D10', 'Djack', 'Dqueen', 'Dking', 'HA', 'H2', 'H3', 'H4', 'H5', 'H6',
-    'H7', 'H8', 'H9', 'H10', 'Hjack', 'Hqueen', 'Hking'];
+    this.finalRound = false;
+    this.gameOver = false;
+    this.deck = deck;
   }
 
   dealCards() {
@@ -32,31 +31,56 @@ class Game {
   }
 
   checkCard(card) {
-    var cardValue = card.substring(1, card.length);
+    var cardValue;
 
+    if (card.includes('red') === true) {
+      cardValue = card.substring(11, card.length - 4);
+    } else if (card.includes('blue') === true || card.includes('gold') === true) {
+      cardValue = card.substring(12, card.length - 4);
+    } else if (card.includes('green') === true) {
+      cardValue = card.substring(13, card.length - 4);
+    }
     return cardValue;
   }
 
-  slap(player) {
-    var player1Cards = this.player1.hand.length;
-    var player2Cards = this.player2.hand.length;
-
-    player1Cards > 0 && player2Cards > 0 ? this.playAsNormal(player) : this.playFinalRound(player);
-  }
-
-  playAsNormal(player) {
-    if (this.checkCard(this.cardPile[0]) === 'jack') {
-      this.shuffleIntoHand(player);
-    } else if (this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[1])) {
-      this.shuffleIntoHand(player);
-    } else if (this.cardPile.length > 2 && this.checkCard(this.cardPile[0]) === this.checkCard(this.cardPile[2])) {
-      this.shuffleIntoHand(player);
+  checkSlap() {
+    if (this.checkCard(game.cardPile[0]) === 'jack') {
+      return 'jack';
+    } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[1])) {
+      return 'pair';
+    } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[2])) {
+      return 'sandwich';
     } else {
-      this.moveCardToBottom(player.hand, this.cardPile);
+      return 'WHOOPS';
     }
   }
 
-  playFinalRound(player) {
+  trackPlayerTurn() {
+    var player1Cards = this.player1.hand.length;
+    var player2Cards = this.player2.hand.length;
+
+    if (player1Cards === 0 || player2Cards === 0) {
+      this.finalRound = true;
+    } else if (this.turnCounter % 2 === 0) {
+      return 'player 1';
+    } else if (this.turnCounter % 2 != 0) {
+      return 'player 2';
+    }
+  }
+
+  slap(player) {
+    this.finalRound === true ? this.followFinalRoundRules(player) : this.followNormalRules(player);
+  }
+
+  followNormalRules(player) {
+    if (this.checkSlap() === 'WHOOPS') {
+      this.moveCardToBottom(player.hand, this.cardPile);
+    } else {
+      this.shuffleIntoHand(player);
+    }
+  }
+
+  followFinalRoundRules(player) {
     var playerHand = player.hand.length;
 
     playerHand === 0 ? this.playToStayInGame(player) : this.playToWin(player);
@@ -64,37 +88,20 @@ class Game {
 
   playToWin(player) {
     if (this.checkCard(this.cardPile[0]) === 'jack') {
-      player.winGame();
-      this.startNewGame();
+      this.shuffleIntoHand(player);
+      this.gameOver = true;
     } else {
       this.moveCardToBottom(player.hand, this.cardPile);
     }
   }
 
   playToStayInGame(player) {
-    var otherPlayer;
-    player === this.player1 ? otherPlayer = this.player2 : otherPlayer = this.player1;
-
     if (this.checkCard(this.cardPile[0]) === 'jack') {
       this.shuffleIntoHand(player);
+      this.finalRound = false;
     } else {
-      otherPlayer.winGame();
-      this.startNewGame();
+      this.gameOver = true;
     }
-  }
-
-  shuffleIntoHand(player) {
-    for (var i = this.cardPile.length; i > 0; i--) {
-      this.moveCardToBottom(this.cardPile, player.hand);
-    }
-    player.hand = this.shuffleCards(player.hand);
-  }
-
-  startNewGame() {
-    this.player1.hand = [];
-    this.player2.hand = [];
-    this.cardPile = [];
-    this.dealCards();
   }
 
   removeCard(startingPile) {
@@ -110,6 +117,31 @@ class Game {
 
   moveCardToTop(startingPile, endingPile) {
     endingPile.unshift(this.removeCard(startingPile));
+  }
+
+  shuffleIntoHand(player) {
+    for (var i = this.cardPile.length; i > 0; i--) {
+      this.moveCardToBottom(this.cardPile, player.hand);
+    }
+    player.hand = this.shuffleCards(player.hand);
+  }
+
+  startNewGame() {
+    this.player1.hand = [];
+    this.player2.hand = [];
+    this.cardPile = [];
+    this.finalRound = false;
+    this.gameOver = false;
+    this.dealCards();
+  }
+
+  saveWins() {
+    game.player1.saveWinsToStorage(game.player1);
+    game.player2.saveWinsToStorage(game.player2);
+  }
+
+  retrieveWins(player) {
+    player.wins = player.retrieveWins(player);
   }
 
   shuffleCards(cards) {
