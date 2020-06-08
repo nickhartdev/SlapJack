@@ -79,6 +79,7 @@ function updateFinalDisplay(player) {
 function displayPlayerWin(player) {
   player.winGame();
   updateWinDisplay();
+  hideCenterPile();
 }
 
 function displayPlayerLoss(player) {
