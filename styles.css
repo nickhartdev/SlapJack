@@ -43,8 +43,8 @@ main {
 
 .deck,
 .card-pile {
-  width: 275px;
-  height: 475px;
+  width: 350px;
+  height: 575px;
   border-radius: 5%;
 }
 
