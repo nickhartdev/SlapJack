@@ -181,11 +181,10 @@ function checkIfNoCards(player) {
 function showDeck(player) {
   var player1Deck = document.querySelector('.player-1-deck');
   var player2Deck = document.querySelector('.player-2-deck');
-  var playerHand = player.hand.length;
 
-  if (player === game.player1 && playerHand === 0) {
+  if (player === game.player1) {
     unhide(player1Deck);
-  } else if (player === game.player2 && playerHand === 0) {
+  } else if (player === game.player2) {
     unhide(player2Deck);
   }
 }
