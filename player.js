@@ -2,8 +2,8 @@ class Player {
   constructor(name) {
     this.id = Date.now();
     this.hand = [];
-    this.wins = 0;
     this.name = name;
+    this.wins = this.retrieveWins(this.name + ' wins');
   }
 
   playCard() {
@@ -19,11 +19,18 @@ class Player {
 
   saveWinsToStorage(player) {
     var playerWins = JSON.stringify(this.wins);
-    localStorage.setItem(`${player.name} wins`, playerWins);
+
+    if (!localStorage.getItem(`${player.name} wins`)) {
+      localStorage.setItem(`${player.name} wins`, playerWins);
+    } else {
+      localStorage[`${player.name} wins`] = playerWins;
+    }
   }
 
   retrieveWins(key) {
     var playerWins = localStorage.getItem(key);
+
+    playerWins === null ? playerWins = 0 : playerWins = parseInt(playerWins);
     return playerWins;
   }
 }
