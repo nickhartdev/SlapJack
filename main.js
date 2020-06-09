@@ -29,8 +29,8 @@ function gameSetup() {
 
 function startNewGame(event) {
   if (event.key === ' ') {
-    game.startNewGame();
     newGameDisplay();
+    game.startNewGame();
   }
 }
 
@@ -84,11 +84,11 @@ function addBorderToPile(player) {
   var centerPile = document.querySelector('.card-pile-image');
 
   if (player === game.player1) {
-    centerPile.classList.add('player-1-deck');
-    centerPile.classList.remove('player-2-deck');
+    centerPile.classList.add('player-1-deck-border');
+    centerPile.classList.remove('player-2-deck-border');
   } else {
-    centerPile.classList.add('player-2-deck');
-    centerPile.classList.remove('player-1-deck');
+    centerPile.classList.add('player-2-deck-border');
+    centerPile.classList.remove('player-1-deck-border');
   }
 }
 
@@ -167,10 +167,10 @@ function checkIfNoCards(player) {
 
   if (player === game.player1 && !playerHand) {
     hide(player1Deck);
-    cardPile.classList.remove('.player-1-deck');
+    cardPile.classList.remove('.player-1-deck-border');
   } else if (player === game.player2 && !playerHand) {
     hide(player2Deck)
-    cardPile.classList.remove('.player-1-deck');
+    cardPile.classList.remove('.player-1-deck-border');
   }
 }
 

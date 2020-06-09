@@ -48,11 +48,11 @@ main {
   border-radius: 5%;
 }
 
-.player-1-deck {
+.player-1-deck-border {
   box-shadow: 0px 0px 40px rgba(34,195,195,1);
 }
 
-.player-2-deck {
+.player-2-deck-border {
   box-shadow: 0px 0px 40px rgba(253,187,45,1);
 }
 

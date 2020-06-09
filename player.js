@@ -30,8 +30,6 @@ class Player {
   retrieveWins(key) {
     var playerWins = localStorage.getItem(key);
 
-    console.log(this.name + ' wins');
-
     playerWins === null ? playerWins = 0 : playerWins = parseInt(playerWins);
     return playerWins;
   }
