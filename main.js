@@ -36,9 +36,9 @@ function startNewGame(event) {
 function playCard(player) {
   game.playCard(player);
   hideHeader();
-  showCenterPile();
   showTopCard();
   checkIfNoCards(player);
+  showCenterPile();
   addBorderToPile(player);
 }
 
