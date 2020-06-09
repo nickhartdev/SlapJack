@@ -60,18 +60,30 @@ function updateNormalDisplay(player) {
 
 function updateFinalDisplay(player) {
   if (game.checkSlap() === 'jack' && !player.hand.length) {
-    changeHeader(`SLAPJACK! ${player.name} is back in the game!`);
-    showDeck(player);
-    hideCenterPile();
+    displayPlayerBackInGame(player);
   } else if (game.checkSlap() === 'jack' && player.hand.length) {
-    changeHeader(`SLAPJACK! ${player.name} wins the game!`);
-    displayPlayerWin(player);
+    displayWin(player);
   } else if (game.checkSlap() != 'jack' && !player.hand.length) {
-    changeHeader(`Oh no! ${player.name} lost this round!`);
-    displayPlayerLoss(player);
+    displayLoss(player);
   } else if (game.checkSlap() != 'jack' && player.hand.length) {
     changeHeader(`Oh no! ${player.name} puts a card at the bottom of the pile!`);
   }
+}
+
+function displayPlayerBackInGame(player) {
+  changeHeader(`SLAPJACK! ${player.name} is back in the game!`);
+  showDeck(player);
+  hideCenterPile();
+}
+
+function displayWin(player) {
+  changeHeader(`SLAPJACK! ${player.name} wins the game!`);
+  displayPlayerWin(player);
+}
+
+function displayLoss(player) {
+  changeHeader(`Oh no! ${player.name} lost this round!`);
+  displayPlayerLoss(player);
 }
 
 function checkHandLength(player) {
