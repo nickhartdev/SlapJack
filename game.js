@@ -12,7 +12,7 @@ class Game {
   dealCards() {
     var shuffledDeck = this.shuffleCards(this.deck);
 
-    for (var i = 0; i < this.deck.length; i++) {
+    for (var i = 0; i < shuffledDeck.length; i++) {
       if (i % 2 === 0) {
         this.player1.hand.push(shuffledDeck[i]);
       } else {
@@ -141,36 +141,15 @@ class Game {
   }
 
   shuffleCards(cards) {
-    var shuffledDeck = [];
-    var randomDeckOrder = this.generateShuffledIndexList(cards);
+    var shuffledCards = [];
 
-    for (var i = 0; i < cards.length; i++) {
-      shuffledDeck.push(cards[randomDeckOrder[i]]);
+    for (var i = cards.length; i > 0; i--) {
+      var randomIndex = Math.floor(Math.random() * cards.length);
+      var randomCardArray = cards.splice(randomIndex, 1);
+      var randomCard = randomCardArray.join('');
+
+      shuffledCards.push(randomCard);
     }
-    return shuffledDeck;
-  }
-
-  generateShuffledIndexList(cards) {
-    var deckIndexList = [];
-    var deckIndex = 0;
-
-    for (var i = 0; i < cards.length; i++) {
-      deckIndexList.push(deckIndex);
-      deckIndex += 1;
-    }
-    return this.shuffleIndexOrder(deckIndexList);
-  }
-
-  shuffleIndexOrder(deckIndexList) {
-    var shuffledList = [];
-
-    for (var i = deckIndexList.length; i > 0; i--) {
-      var randomIndex = Math.floor(Math.random() * deckIndexList.length);
-      var randomDeckIndexArray = deckIndexList.splice(randomIndex, 1);
-      var randomDeckIndex = randomDeckIndexArray.join('');
-
-      shuffledList.push(randomDeckIndex);
-    }
-    return shuffledList;
+    return shuffledCards;
   }
 }
