@@ -50,7 +50,12 @@ function slapCard(player) {
 }
 
 function updateNormalDisplay(player) {
+  var header = document.querySelector('.event-text');
+
   changeHeader(game.returnSlapResult(player));
+  if (!header.innerHTML.includes('Whoops!')) {
+    hideCenterPile();
+  }
 }
 
 function updateFinalDisplay(player) {
