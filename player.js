@@ -2,7 +2,7 @@ class Player {
   constructor(name) {
     this.id = Date.now();
     this.hand = [];
-    this.wins = 0;
+    this.wins = this.retrieveWins(this.name + ' wins');
     this.name = name;
   }
 
@@ -24,6 +24,8 @@ class Player {
 
   retrieveWins(key) {
     var playerWins = localStorage.getItem(key);
+
+    playerWins === null ? playerWins = 0 : playerWins;
     return playerWins;
   }
 }

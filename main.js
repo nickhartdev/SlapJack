@@ -123,7 +123,7 @@ function updateWinDisplay() {
   var player1Wins = game.player1.retrieveWins('Player 1 wins');
   var player2Wins = game.player2.retrieveWins('Player 2 wins');
 
-  if (player1Wins === null || player2Wins === null) {
+  if (!player1Wins || !player2Wins) {
     player1WinText.innerHTML = '0 wins';
     player2WinText.innerHTML = '0 wins';
   } else {

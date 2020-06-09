@@ -139,10 +139,6 @@ class Game {
     game.player2.saveWinsToStorage(game.player2);
   }
 
-  retrieveWins(player) {
-    player.wins = player.retrieveWins(player);
-  }
-
   shuffleCards(cards) {
     var shuffledDeck = [];
     var randomDeckOrder = this.generateShuffledIndexList(cards);
