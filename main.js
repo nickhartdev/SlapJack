@@ -124,13 +124,8 @@ function updateWinDisplay() {
   var player1Wins = game.player1.retrieveWins('Player 1 wins');
   var player2Wins = game.player2.retrieveWins('Player 2 wins');
 
-  if (!player1Wins || !player2Wins) {
-    player1WinText.innerHTML = '0 wins';
-    player2WinText.innerHTML = '0 wins';
-  } else {
-    player1WinText.innerHTML = player1Wins + ' wins';
-    player2WinText.innerHTML = player2Wins + ' wins';
-  }
+  player1WinText.innerHTML = player1Wins.toString() + ' wins';
+  player2WinText.innerHTML = player2Wins.toString() + ' wins';
 }
 
 function changeHeader(text) {
