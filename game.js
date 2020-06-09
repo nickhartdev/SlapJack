@@ -131,6 +131,7 @@ class Game {
     this.cardPile = [];
     this.finalRound = false;
     this.gameOver = false;
+    this.turnCounter = 0;
     this.dealCards();
   }
 
