@@ -19,6 +19,7 @@ function playGame(event) {
   } else if (event.key === 'j') {
     slapCard(game.player2);
   }
+  game.trackPlayerTurn();
 }
 
 function gameSetup() {
