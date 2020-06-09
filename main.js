@@ -166,12 +166,15 @@ function showCenterPile() {
 function checkIfNoCards(player) {
   var player1Deck = document.querySelector('.player-1-deck');
   var player2Deck = document.querySelector('.player-2-deck');
+  var cardPile = document.querySelector('.card-pile-image');
   var playerHand = player.hand.length;
 
-  if (player === game.player1 && playerHand === 0) {
+  if (player === game.player1 && !playerHand) {
     hide(player1Deck);
-  } else if (player === game.player2 && playerHand === 0) {
+    cardPile.classList.remove('.player-1-deck');
+  } else if (player === game.player2 && !playerHand) {
     hide(player2Deck)
+    cardPile.classList.remove('.player-1-deck');
   }
 }
 
