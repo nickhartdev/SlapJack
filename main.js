@@ -50,18 +50,7 @@ function slapCard(player) {
 }
 
 function updateNormalDisplay(player) {
-  if (game.checkSlap() === 'jack') {
-    changeHeader(`SLAPJACK! ${player.name} takes the pile!`);
-    hideCenterPile();
-  } else if (game.checkSlap() === 'pair') {
-    changeHeader(`Pair! ${player.name} takes the pile!`);
-    hideCenterPile();
-  } else if (game.checkSlap() === 'sandwich') {
-    changeHeader(`Sandwich! ${player.name} takes the pile!`);
-    hideCenterPile();
-  } else if (game.checkSlap() === 'WHOOPS') {
-    changeHeader(`Whoops! ${player.name} puts a card at the bottom of the pile!`);
-  }
+  changeHeader(game.returnSlapResult(player));
 }
 
 function updateFinalDisplay(player) {
@@ -105,7 +94,7 @@ function addPlayer1Border() {
 
 function addPlayer2Border() {
   var centerPile = document.querySelector('.card-pile-image');
-  
+
   centerPile.classList.add('player-2-deck-border');
   centerPile.classList.remove('player-1-deck-border');
 }

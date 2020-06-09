@@ -42,15 +42,15 @@ class Game {
     return cardValue;
   }
 
-  checkSlap(player) {
+  returnSlapResult(player) {
     if (this.checkCard(game.cardPile[0]) === 'jack') {
-      return 'jack';
+      return `SLAPJACK! ${player.name} takes the pile!`;
     } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[1])) {
-      return 'pair';
+      return `Pair! ${player.name} takes the pile!`;
     } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[2])) {
-      return 'sandwich';
+      return `Sandwich! ${player.name} takes the pile!`;
     } else {
-      return 'WHOOPS';
+      return `Whoops! ${player.name} puts a card at the bottom of the pile!`;
     }
   }
 
@@ -72,7 +72,7 @@ class Game {
   }
 
   followNormalRules(player) {
-    if (this.checkSlap() === 'WHOOPS') {
+    if (this.returnSlapResult(player).includes('WHOOPS')) {
       this.moveCardToBottom(player.hand, this.cardPile);
     } else {
       this.shuffleIntoHand(player);
@@ -125,6 +125,19 @@ class Game {
     player.hand = this.shuffleCards(player.hand);
   }
 
+  shuffleCards(cards) {
+    var shuffledCards = [];
+
+    for (var i = cards.length; i > 0; i--) {
+      var randomIndex = Math.floor(Math.random() * cards.length);
+      var randomCardArray = cards.splice(randomIndex, 1);
+      var randomCard = randomCardArray.join('');
+
+      shuffledCards.push(randomCard);
+    }
+    return shuffledCards;
+  }
+
   startNewGame() {
     this.player1.hand = [];
     this.player2.hand = [];
@@ -140,16 +153,4 @@ class Game {
     game.player2.saveWinsToStorage(game.player2);
   }
 
-  shuffleCards(cards) {
-    var shuffledCards = [];
-
-    for (var i = cards.length; i > 0; i--) {
-      var randomIndex = Math.floor(Math.random() * cards.length);
-      var randomCardArray = cards.splice(randomIndex, 1);
-      var randomCard = randomCardArray.join('');
-
-      shuffledCards.push(randomCard);
-    }
-    return shuffledCards;
-  }
 }
