@@ -80,16 +80,34 @@ function updateFinalDisplay(player) {
   }
 }
 
-function addBorderToPile(player) {
+function checkHandLength(player) {
   var centerPile = document.querySelector('.card-pile-image');
 
-  if (player === game.player1) {
-    centerPile.classList.add('player-1-deck-border');
-    centerPile.classList.remove('player-2-deck-border');
-  } else {
-    centerPile.classList.add('player-2-deck-border');
-    centerPile.classList.remove('player-1-deck-border');
+  if (player.hand.length) {
+    addBorderToPile(player);
   }
+}
+
+function addBorderToPile(player) {
+  if (player === game.player1) {
+    addPlayer1Border();
+  } else {
+    addPlayer2Border()
+  }
+}
+
+function addPlayer1Border() {
+  var centerPile = document.querySelector('.card-pile-image');
+
+  centerPile.classList.add('player-1-deck-border');
+  centerPile.classList.remove('player-2-deck-border');
+}
+
+function addPlayer2Border() {
+  var centerPile = document.querySelector('.card-pile-image');
+  
+  centerPile.classList.add('player-2-deck-border');
+  centerPile.classList.remove('player-1-deck-border');
 }
 
 function displayPlayerWin(player) {
