@@ -4,17 +4,17 @@ window.onload = gameSetup();
 document.addEventListener('keydown', playerActions);
 
 function playerActions(event) {
-  game.gameOver === false ? playGame(event) : startNewGame(event);
+  !game.gameOver ? playGame(event) : startNewGame(event);
 }
 
 function playGame(event) {
   var gameTurn = game.trackPlayerTurn();
 
-  if (event.key === 'q' && (gameTurn === 'player 1' || game.finalRound === true)) {
+  if (event.key === 'q' && (gameTurn === 'player 1' || game.finalRound)) {
     playCard(game.player1);
   } else if (event.key === 'f') {
     slapCard(game.player1);
-  } else if (event.key === 'p' && (gameTurn === 'player 2' || game.finalRound === true)) {
+  } else if (event.key === 'p' && (gameTurn === 'player 2' || game.finalRound)) {
     playCard(game.player2)
   } else if (event.key === 'j') {
     slapCard(game.player2);
@@ -44,7 +44,7 @@ function playCard(player) {
 
 function slapCard(player) {
   showHeader();
-  game.finalRound === true ? updateFinalDisplay(player) : updateNormalDisplay(player);
+  game.finalRound ? updateFinalDisplay(player) : updateNormalDisplay(player);
   game.slap(player);
 }
 
@@ -64,17 +64,17 @@ function updateNormalDisplay(player) {
 }
 
 function updateFinalDisplay(player) {
-  if (game.checkSlap() === 'jack' && player.hand.length === 0) {
+  if (game.checkSlap() === 'jack' && !player.hand.length) {
     changeHeader(`SLAPJACK! ${player.name} is back in the game!`);
     showDeck(player);
     hideCenterPile();
-  } else if (game.checkSlap() === 'jack' && player.hand.length > 0) {
+  } else if (game.checkSlap() === 'jack' && player.hand.length) {
     changeHeader(`SLAPJACK! ${player.name} wins the game!`);
     displayPlayerWin(player);
-  } else if (game.checkSlap() != 'jack' && player.hand.length === 0) {
+  } else if (game.checkSlap() != 'jack' && !player.hand.length) {
     changeHeader(`Oh no! ${player.name} lost this round!`);
     displayPlayerLoss(player);
-  } else if (game.checkSlap() != 'jack' && player.hand.length > 0) {
+  } else if (game.checkSlap() != 'jack' && player.hand.length) {
     changeHeader(`Oh no! ${player.name} puts a card at the bottom of the pile!`);
   }
 }

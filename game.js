@@ -23,27 +23,26 @@ class Game {
 
   playCard(player) {
     this.turnCounter += 1;
-    if (player.hand.length === 0) {
-      return;
-    } else {
+    if (player.hand.length) {
       this.moveCardToTop(player.hand, this.cardPile);
     }
+    return;
   }
 
   checkCard(card) {
     var cardValue;
 
-    if (card.includes('red') === true) {
+    if (card.includes('red')) {
       cardValue = card.substring(11, card.length - 4);
-    } else if (card.includes('blue') === true || card.includes('gold') === true) {
+    } else if (card.includes('blue') || card.includes('gold')) {
       cardValue = card.substring(12, card.length - 4);
-    } else if (card.includes('green') === true) {
+    } else if (card.includes('green')) {
       cardValue = card.substring(13, card.length - 4);
     }
     return cardValue;
   }
 
-  checkSlap() {
+  checkSlap(player) {
     if (this.checkCard(game.cardPile[0]) === 'jack') {
       return 'jack';
     } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[1])) {
@@ -59,7 +58,7 @@ class Game {
     var player1Cards = this.player1.hand.length;
     var player2Cards = this.player2.hand.length;
 
-    if (player1Cards === 0 || player2Cards === 0) {
+    if (!player1Cards || !player2Cards) {
       this.finalRound = true;
     } else if (this.turnCounter % 2 === 0) {
       return 'player 1';
@@ -69,7 +68,7 @@ class Game {
   }
 
   slap(player) {
-    this.finalRound === true ? this.followFinalRoundRules(player) : this.followNormalRules(player);
+    this.finalRound ? this.followFinalRoundRules(player) : this.followNormalRules(player);
   }
 
   followNormalRules(player) {
@@ -83,7 +82,7 @@ class Game {
   followFinalRoundRules(player) {
     var playerHand = player.hand.length;
 
-    playerHand === 0 ? this.playToStayInGame(player) : this.playToWin(player);
+    !playerHand ? this.playToStayInGame(player) : this.playToWin(player);
   }
 
   playToWin(player) {
