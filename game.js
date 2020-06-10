@@ -21,6 +21,19 @@ class Game {
     }
   }
 
+  trackPlayerTurn() {
+    var player1Cards = this.player1.hand.length;
+    var player2Cards = this.player2.hand.length;
+
+    if (!player1Cards || !player2Cards) {
+      this.finalRound = true;
+    } else if (this.turnCounter % 2 === 0) {
+      return 'player 1';
+    } else if (this.turnCounter % 2 != 0) {
+      return 'player 2';
+    }
+  }
+
   playCard(player) {
     this.turnCounter += 1;
     if (player.hand.length) {
@@ -66,19 +79,6 @@ class Game {
     return this.returnSlapResult(player).includes('Whoops!');
   }
 
-  trackPlayerTurn() {
-    var player1Cards = this.player1.hand.length;
-    var player2Cards = this.player2.hand.length;
-
-    if (!player1Cards || !player2Cards) {
-      this.finalRound = true;
-    } else if (this.turnCounter % 2 === 0) {
-      return 'player 1';
-    } else if (this.turnCounter % 2 != 0) {
-      return 'player 2';
-    }
-  }
-
   slap(player) {
     this.finalRound ? this.followFinalRoundRules(player) : this.followNormalRules(player);
   }
@@ -115,11 +115,17 @@ class Game {
     }
   }
 
-  removeCard(startingPile) {
-    var removedCardArray = startingPile.splice(0, 1);
-    var removedCard = removedCardArray.join('');
+  shuffleIntoHand(player) {
+    for (var i = this.cardPile.length; i > 0; i--) {
+      this.moveCardToBottom(this.cardPile, player.hand);
+    }
+    player.hand = this.shuffleCards(player.hand);
+  }
 
-    return removedCard;
+  shuffleCardsIntoDeck(cards) {
+    for (var i = cards.length; i > 0; i--) {
+      this.moveCardToTop(cards, this.deck);
+    }
   }
 
   moveCardToBottom(startingPile, endingPile) {
@@ -130,11 +136,11 @@ class Game {
     endingPile.unshift(this.removeCard(startingPile));
   }
 
-  shuffleIntoHand(player) {
-    for (var i = this.cardPile.length; i > 0; i--) {
-      this.moveCardToBottom(this.cardPile, player.hand);
-    }
-    player.hand = this.shuffleCards(player.hand);
+  removeCard(startingPile) {
+    var removedCardArray = startingPile.splice(0, 1);
+    var removedCard = removedCardArray.join('');
+
+    return removedCard;
   }
 
   shuffleCards(cards) {
@@ -148,12 +154,6 @@ class Game {
       shuffledCards.push(randomCard);
     }
     return shuffledCards;
-  }
-
-  shuffleCardsIntoDeck(cards) {
-    for (var i = cards.length; i > 0; i--) {
-      this.moveCardToTop(cards, this.deck);
-    }
   }
 
   startNewGame() {
