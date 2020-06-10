@@ -68,7 +68,7 @@ class Game {
   }
 
   checkIfEnoughCards() {
-    return this.cardPile.length > 3 || this.cardPile.length > 2;
+    return this.cardPile.length >= 2;
   }
 
   checkForSlapjack(player) {

@@ -92,7 +92,7 @@ function newGameDisplay() {
   unhide(player1Deck);
   unhide(player2Deck);
   hideCenterPileImage();
-  hideElement('.event-text');;
+  hideElement('.header-text');
 }
 
 function updateWinDisplay() {
