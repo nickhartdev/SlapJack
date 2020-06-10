@@ -12,12 +12,25 @@ class Game {
   dealCards() {
     var shuffledDeck = this.shuffleCards(this.deck);
 
-    for (var i = 0; i < this.deck.length; i++) {
+    for (var i = 0; i < shuffledDeck.length; i++) {
       if (i % 2 === 0) {
         this.player1.hand.push(shuffledDeck[i]);
       } else {
         this.player2.hand.push(shuffledDeck[i]);
       }
+    }
+  }
+
+  trackPlayerTurn() {
+    var player1Cards = this.player1.hand.length;
+    var player2Cards = this.player2.hand.length;
+
+    if (!player1Cards || !player2Cards) {
+      this.finalRound = true;
+    } else if (this.turnCounter % 2 === 0) {
+      return 'player 1';
+    } else if (this.turnCounter % 2 != 0) {
+      return 'player 2';
     }
   }
 
@@ -42,29 +55,28 @@ class Game {
     return cardValue;
   }
 
-  checkSlap(player) {
+  returnSlapResult(player) {
     if (this.checkCard(game.cardPile[0]) === 'jack') {
-      return 'jack';
-    } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[1])) {
-      return 'pair';
-    } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[2])) {
-      return 'sandwich';
+      return `SLAPJACK! ${player.name} takes the pile!`;
+    } else if (this.checkIfEnoughCards() && this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[1])) {
+      return `Pair! ${player.name} takes the pile!`;
+    } else if (this.checkIfEnoughCards() && this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[2])) {
+      return `Sandwich! ${player.name} takes the pile!`;
     } else {
-      return 'WHOOPS';
+      return `Whoops! ${player.name} puts a card at the bottom of the pile!`;
     }
   }
 
-  trackPlayerTurn() {
-    var player1Cards = this.player1.hand.length;
-    var player2Cards = this.player2.hand.length;
+  checkIfEnoughCards() {
+    return this.cardPile.length >= 2;
+  }
 
-    if (!player1Cards || !player2Cards) {
-      this.finalRound = true;
-    } else if (this.turnCounter % 2 === 0) {
-      return 'player 1';
-    } else if (this.turnCounter % 2 != 0) {
-      return 'player 2';
-    }
+  checkForSlapjack(player) {
+    return game.returnSlapResult(player).includes('SLAPJACK');
+  }
+
+  checkForWhoops(player) {
+    return this.returnSlapResult(player).includes('Whoops!');
   }
 
   slap(player) {
@@ -72,7 +84,7 @@ class Game {
   }
 
   followNormalRules(player) {
-    if (this.checkSlap() === 'WHOOPS') {
+    if (this.checkForWhoops(player)) {
       this.moveCardToBottom(player.hand, this.cardPile);
     } else {
       this.shuffleIntoHand(player);
@@ -86,7 +98,7 @@ class Game {
   }
 
   playToWin(player) {
-    if (this.checkCard(this.cardPile[0]) === 'jack') {
+    if (this.checkForSlapjack(player)) {
       this.shuffleIntoHand(player);
       this.gameOver = true;
     } else {
@@ -95,7 +107,7 @@ class Game {
   }
 
   playToStayInGame(player) {
-    if (this.checkCard(this.cardPile[0]) === 'jack') {
+    if (this.checkForSlapjack(player)) {
       this.shuffleIntoHand(player);
       this.finalRound = false;
     } else {
@@ -103,11 +115,17 @@ class Game {
     }
   }
 
-  removeCard(startingPile) {
-    var removedCardArray = startingPile.splice(0, 1);
-    var removedCard = removedCardArray.join('');
+  shuffleIntoHand(player) {
+    for (var i = this.cardPile.length; i > 0; i--) {
+      this.moveCardToBottom(this.cardPile, player.hand);
+    }
+    player.hand = this.shuffleCards(player.hand);
+  }
 
-    return removedCard;
+  shuffleCardsIntoDeck(cards) {
+    for (var i = cards.length; i > 0; i--) {
+      this.moveCardToTop(cards, this.deck);
+    }
   }
 
   moveCardToBottom(startingPile, endingPile) {
@@ -118,17 +136,30 @@ class Game {
     endingPile.unshift(this.removeCard(startingPile));
   }
 
-  shuffleIntoHand(player) {
-    for (var i = this.cardPile.length; i > 0; i--) {
-      this.moveCardToBottom(this.cardPile, player.hand);
+  removeCard(startingPile) {
+    var removedCardArray = startingPile.splice(0, 1);
+    var removedCard = removedCardArray.join('');
+
+    return removedCard;
+  }
+
+  shuffleCards(cards) {
+    var shuffledCards = [];
+
+    for (var i = cards.length; i > 0; i--) {
+      var randomIndex = Math.floor(Math.random() * cards.length);
+      var randomCardArray = cards.splice(randomIndex, 1);
+      var randomCard = randomCardArray.join('');
+
+      shuffledCards.push(randomCard);
     }
-    player.hand = this.shuffleCards(player.hand);
+    return shuffledCards;
   }
 
   startNewGame() {
-    this.player1.hand = [];
-    this.player2.hand = [];
-    this.cardPile = [];
+    this.shuffleCardsIntoDeck(this.player1.hand);
+    this.shuffleCardsIntoDeck(this.player2.hand);
+    this.shuffleCardsIntoDeck(this.cardPile);
     this.finalRound = false;
     this.gameOver = false;
     this.turnCounter = 0;
@@ -140,37 +171,4 @@ class Game {
     game.player2.saveWinsToStorage(game.player2);
   }
 
-  shuffleCards(cards) {
-    var shuffledDeck = [];
-    var randomDeckOrder = this.generateShuffledIndexList(cards);
-
-    for (var i = 0; i < cards.length; i++) {
-      shuffledDeck.push(cards[randomDeckOrder[i]]);
-    }
-    return shuffledDeck;
-  }
-
-  generateShuffledIndexList(cards) {
-    var deckIndexList = [];
-    var deckIndex = 0;
-
-    for (var i = 0; i < cards.length; i++) {
-      deckIndexList.push(deckIndex);
-      deckIndex += 1;
-    }
-    return this.shuffleIndexOrder(deckIndexList);
-  }
-
-  shuffleIndexOrder(deckIndexList) {
-    var shuffledList = [];
-
-    for (var i = deckIndexList.length; i > 0; i--) {
-      var randomIndex = Math.floor(Math.random() * deckIndexList.length);
-      var randomDeckIndexArray = deckIndexList.splice(randomIndex, 1);
-      var randomDeckIndex = randomDeckIndexArray.join('');
-
-      shuffledList.push(randomDeckIndex);
-    }
-    return shuffledList;
-  }
 }
