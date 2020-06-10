@@ -47,7 +47,7 @@ The styling for this page was pretty minimal. I set the background gradient, cho
 
 **Screenshots**
 
-![Game start](assets/screenshots/slapjack-1)
-![Two player decks with card pile](assets/screenshots/slapjack-2)
-![Event message when someone makes a wrong slap](assets/screenshots/slapjack-3)
-![Game win screen](assets/screenshots/slapjack-4)
+![Game start](/assets/screenshots/slapjack-1)
+![Two player decks with card pile](/assets/screenshots/slapjack-2)
+![Event message when someone makes a wrong slap](/assets/screenshots/slapjack-3)
+![Game win screen](/assets/screenshots/slapjack-4)
