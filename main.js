@@ -22,16 +22,16 @@ function playGame(event) {
   game.trackPlayerTurn();
 }
 
-function gameSetup() {
-  game.dealCards();
-  updateWinDisplay();
-}
-
 function startNewGame(event) {
   if (event.key === ' ') {
     newGameDisplay();
     game.startNewGame();
   }
+}
+
+function gameSetup() {
+  game.dealCards();
+  updateWinDisplay();
 }
 
 function playCard(player) {
@@ -161,7 +161,7 @@ function changeBorder(borderToAdd, borderToRemove) {
 }
 
 function changeHeader(text) {
-  var header = document.querySelector('.event-text');
+  var header = document.querySelector('.header-text');
   header.innerHTML = text;
 }
 
