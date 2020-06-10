@@ -36,24 +36,24 @@ function startNewGame(event) {
 
 function playCard(player) {
   game.playCard(player);
-  hideHeader();
+  hideElement('.header-text');
   checkIfNoCards(player);
-  showCenterPile();
+  showCenterPileImage();
   addBorderToPile(player);
 }
 
 function slapCard(player) {
-  showHeader();
+  showElement('.header-text');
   game.finalRound ? updateFinalDisplay(player) : updateNormalDisplay(player);
   game.slap(player);
 }
 
 function updateNormalDisplay(player) {
-  var header = document.querySelector('.event-text');
+  var header = document.querySelector('.header-text');
 
   changeHeader(game.returnSlapResult(player));
   if (!game.checkForWhoops(player)) {
-    hideCenterPile();
+    hideCenterPileImage();
   }
 }
 
@@ -73,7 +73,7 @@ function displayPlayerWin(player) {
   player.winGame();
   game.saveWins();
   updateWinDisplay();
-  hideCenterPile();
+  hideCenterPileImage();
 }
 
 function displayPlayerLoss(player) {
@@ -91,8 +91,8 @@ function newGameDisplay() {
 
   unhide(player1Deck);
   unhide(player2Deck);
-  hideCenterPile();
-  hideHeader();
+  hideCenterPileImage();
+  hideElement('.event-text');;
 }
 
 function updateWinDisplay() {
@@ -107,16 +107,16 @@ function updateWinDisplay() {
 
 function checkIfNoCards(player) {
   if (player === game.player1 && !player.hand.length) {
-    hidePlayer1Deck();
+    hideElement('.player-1-deck');
   } else if (player === game.player2 && !player.hand.length) {
-    hidePlayer2Deck();
+    hideElement('.player-2-deck');
   }
 }
 
 function displayPlayerBackInGame(player) {
   changeHeader(`SLAPJACK! ${player.name} is back in the game!`);
   showDeck(player);
-  hideCenterPile();
+  hideCenterPileImage();
 }
 
 function displayWin(player) {
@@ -147,9 +147,9 @@ function addBorderToPile(player) {
 
 function showDeck(player) {
   if (player === game.player1) {
-    showPlayer1Deck();
+    showElement('.player-1-deck');
   } else if (player === game.player2) {
-    showPlayer2Deck();
+    showElement('.player-2-deck');
   }
 }
 
@@ -165,46 +165,26 @@ function changeHeader(text) {
   header.innerHTML = text;
 }
 
-function hideHeader() {
-  var header = document.querySelector('.event-text');
-  hide(header);
-}
-
-function showHeader() {
-  var header = document.querySelector('.event-text');
-  unhide(header);
-}
-
-function hideCenterPile() {
+function hideCenterPileImage() {
   var cardPile = document.querySelector('.card-pile-image');
-  hide(cardPile);
   cardPile.src = '';
+  hide(cardPile);
 }
 
-function showCenterPile() {
+function showCenterPileImage() {
   var cardPile = document.querySelector('.card-pile-image');
   cardPile.src = game.cardPile[0];
   unhide(cardPile);
 }
 
-function hidePlayer1Deck() {
-  var player1Deck = document.querySelector('.player-1-deck');
-  hide(player1Deck);
+function hideElement(elementClass) {
+  var element = document.querySelector(elementClass);
+  hide(element);
 }
 
-function hidePlayer2Deck() {
-  var player2Deck = document.querySelector('.player-2-deck');
-  hide(player2Deck);
-}
-
-function showPlayer1Deck() {
-  var player1Deck = document.querySelector('.player-1-deck');
-  unhide(player1Deck);
-}
-
-function showPlayer2Deck() {
-  var player2Deck = document.querySelector('.player-2-deck');
-  unhide(player2Deck);
+function showElement(elementClass) {
+  var element = document.querySelector(elementClass);
+  unhide(element);
 }
 
 function hide(element) {
