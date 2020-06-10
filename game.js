@@ -150,10 +150,16 @@ class Game {
     return shuffledCards;
   }
 
+  shuffleCardsIntoDeck(cards) {
+    for (var i = cards.length; i > 0; i--) {
+      this.moveCardToTop(cards, this.deck);
+    }
+  }
+
   startNewGame() {
-    this.player1.hand = [];
-    this.player2.hand = [];
-    this.cardPile = [];
+    this.shuffleCardsIntoDeck(this.player1.hand);
+    this.shuffleCardsIntoDeck(this.player2.hand);
+    this.shuffleCardsIntoDeck(this.cardPile);
     this.finalRound = false;
     this.gameOver = false;
     this.turnCounter = 0;
