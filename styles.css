@@ -32,6 +32,10 @@ main {
   visibility: hidden;
 }
 
+.header-text {
+  padding-bottom: 1em;
+}
+
 .deck-container {
   display: flex;
   justify-content: center;
