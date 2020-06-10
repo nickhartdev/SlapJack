@@ -53,19 +53,19 @@ function updateNormalDisplay(player) {
   var header = document.querySelector('.event-text');
 
   changeHeader(game.returnSlapResult(player));
-  if (!header.innerHTML.includes('Whoops!')) {
+  if (!game.checkForWhoops(player)) {
     hideCenterPile();
   }
 }
 
 function updateFinalDisplay(player) {
-  if (game.checkSlap() === 'jack' && !player.hand.length) {
+  if (game.checkForSlapjack(player) && !player.hand.length) {
     displayPlayerBackInGame(player);
-  } else if (game.checkSlap() === 'jack' && player.hand.length) {
+  } else if (game.checkForSlapjack(player) && player.hand.length) {
     displayWin(player);
-  } else if (game.checkSlap() != 'jack' && !player.hand.length) {
+  } else if (!game.checkForSlapjack(player) && !player.hand.length) {
     displayLoss(player);
-  } else if (game.checkSlap() != 'jack' && player.hand.length) {
+  } else if (!game.checkForSlapjack(player) && player.hand.length) {
     changeHeader(`Oh no! ${player.name} puts a card at the bottom of the pile!`);
   }
 }

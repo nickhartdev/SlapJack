@@ -45,13 +45,25 @@ class Game {
   returnSlapResult(player) {
     if (this.checkCard(game.cardPile[0]) === 'jack') {
       return `SLAPJACK! ${player.name} takes the pile!`;
-    } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[1])) {
+    } else if (this.checkIfEnoughCards() && this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[1])) {
       return `Pair! ${player.name} takes the pile!`;
-    } else if (this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[2])) {
+    } else if (this.checkIfEnoughCards() && this.checkCard(game.cardPile[0]) === this.checkCard(game.cardPile[2])) {
       return `Sandwich! ${player.name} takes the pile!`;
     } else {
       return `Whoops! ${player.name} puts a card at the bottom of the pile!`;
     }
+  }
+
+  checkIfEnoughCards() {
+    return this.cardPile.length > 3 || this.cardPile.length > 2;
+  }
+
+  checkForSlapjack(player) {
+    return game.returnSlapResult(player).includes('SLAPJACK');
+  }
+
+  checkForWhoops(player) {
+    return this.returnSlapResult(player).includes('Whoops!');
   }
 
   trackPlayerTurn() {
@@ -72,7 +84,7 @@ class Game {
   }
 
   followNormalRules(player) {
-    if (this.returnSlapResult(player).includes('WHOOPS')) {
+    if (this.checkForWhoops(player)) {
       this.moveCardToBottom(player.hand, this.cardPile);
     } else {
       this.shuffleIntoHand(player);
@@ -86,7 +98,7 @@ class Game {
   }
 
   playToWin(player) {
-    if (this.checkCard(this.cardPile[0]) === 'jack') {
+    if (this.checkForSlapjack(player)) {
       this.shuffleIntoHand(player);
       this.gameOver = true;
     } else {
@@ -95,7 +107,7 @@ class Game {
   }
 
   playToStayInGame(player) {
-    if (this.checkCard(this.cardPile[0]) === 'jack') {
+    if (this.checkForSlapjack(player)) {
       this.shuffleIntoHand(player);
       this.finalRound = false;
     } else {
