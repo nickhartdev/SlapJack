@@ -44,3 +44,10 @@ As mentioned above, my understanding of the seperation between the display logic
 **Page Styling**  
 
 The styling for this page was pretty minimal. I set the background gradient, chose a font family, set some drop shadows for the cards, and that was it.
+
+**Screenshots**
+
+![Game start](assets/screenshots/slapjack-1)
+![Two player decks with card pile](assets/screenshots/slapjack-2)
+![Event message when someone makes a wrong slap](assets/screenshots/slapjack-3)
+![Game win screen](assets/screenshots/slapjack-4)
