@@ -37,7 +37,6 @@ function startNewGame(event) {
 function playCard(player) {
   game.playCard(player);
   hideHeader();
-  showTopCard();
   checkIfNoCards(player);
   showCenterPile();
   addBorderToPile(player);
@@ -68,52 +67,6 @@ function updateFinalDisplay(player) {
   } else if (!game.checkForSlapjack(player) && player.hand.length) {
     changeHeader(`Oh no! ${player.name} puts a card at the bottom of the pile!`);
   }
-}
-
-function displayPlayerBackInGame(player) {
-  changeHeader(`SLAPJACK! ${player.name} is back in the game!`);
-  showDeck(player);
-  hideCenterPile();
-}
-
-function displayWin(player) {
-  changeHeader(`SLAPJACK! ${player.name} wins the game!`);
-  displayPlayerWin(player);
-}
-
-function displayLoss(player) {
-  changeHeader(`Oh no! ${player.name} lost this round!`);
-  displayPlayerLoss(player);
-}
-
-function checkHandLength(player) {
-  var centerPile = document.querySelector('.card-pile-image');
-
-  if (player.hand.length) {
-    addBorderToPile(player);
-  }
-}
-
-function addBorderToPile(player) {
-  if (player === game.player1) {
-    addPlayer1Border();
-  } else {
-    addPlayer2Border()
-  }
-}
-
-function addPlayer1Border() {
-  var centerPile = document.querySelector('.card-pile-image');
-
-  centerPile.classList.add('player-1-deck-border');
-  centerPile.classList.remove('player-2-deck-border');
-}
-
-function addPlayer2Border() {
-  var centerPile = document.querySelector('.card-pile-image');
-
-  centerPile.classList.add('player-2-deck-border');
-  centerPile.classList.remove('player-1-deck-border');
 }
 
 function displayPlayerWin(player) {
@@ -152,6 +105,61 @@ function updateWinDisplay() {
   player2WinText.innerHTML = player2Wins.toString() + ' wins';
 }
 
+function checkIfNoCards(player) {
+  if (player === game.player1 && !player.hand.length) {
+    hidePlayer1Deck();
+  } else if (player === game.player2 && !player.hand.length) {
+    hidePlayer2Deck();
+  }
+}
+
+function displayPlayerBackInGame(player) {
+  changeHeader(`SLAPJACK! ${player.name} is back in the game!`);
+  showDeck(player);
+  hideCenterPile();
+}
+
+function displayWin(player) {
+  changeHeader(`SLAPJACK! ${player.name} wins the game!`);
+  displayPlayerWin(player);
+}
+
+function displayLoss(player) {
+  changeHeader(`Oh no! ${player.name} lost this round!`);
+  displayPlayerLoss(player);
+}
+
+function checkHandLength(player) {
+  var centerPile = document.querySelector('.card-pile-image');
+
+  if (player.hand.length) {
+    addBorderToPile(player);
+  }
+}
+
+function addBorderToPile(player) {
+  if (player === game.player1) {
+    changeBorder('player-1-deck-border', 'player-2-deck-border');
+  } else {
+    changeBorder('player-2-deck-border', 'player-1-deck-border');
+  }
+}
+
+function showDeck(player) {
+  if (player === game.player1) {
+    showPlayer1Deck();
+  } else if (player === game.player2) {
+    showPlayer2Deck();
+  }
+}
+
+function changeBorder(borderToAdd, borderToRemove) {
+  var centerPile = document.querySelector('.card-pile-image');
+
+  centerPile.classList.add(borderToAdd);
+  centerPile.classList.remove(borderToRemove);
+}
+
 function changeHeader(text) {
   var header = document.querySelector('.event-text');
   header.innerHTML = text;
@@ -167,11 +175,6 @@ function showHeader() {
   unhide(header);
 }
 
-function showTopCard() {
-  var cardPileImage = document.querySelector('.card-pile-image');
-  cardPileImage.src = game.cardPile[0];
-}
-
 function hideCenterPile() {
   var cardPile = document.querySelector('.card-pile-image');
   hide(cardPile);
@@ -180,33 +183,28 @@ function hideCenterPile() {
 
 function showCenterPile() {
   var cardPile = document.querySelector('.card-pile-image');
+  cardPile.src = game.cardPile[0];
   unhide(cardPile);
 }
 
-function checkIfNoCards(player) {
+function hidePlayer1Deck() {
   var player1Deck = document.querySelector('.player-1-deck');
-  var player2Deck = document.querySelector('.player-2-deck');
-  var cardPile = document.querySelector('.card-pile-image');
-  var playerHand = player.hand.length;
-
-  if (player === game.player1 && !playerHand) {
-    hide(player1Deck);
-    cardPile.classList.remove('.player-1-deck-border');
-  } else if (player === game.player2 && !playerHand) {
-    hide(player2Deck)
-    cardPile.classList.remove('.player-1-deck-border');
-  }
+  hide(player1Deck);
 }
 
-function showDeck(player) {
-  var player1Deck = document.querySelector('.player-1-deck');
+function hidePlayer2Deck() {
   var player2Deck = document.querySelector('.player-2-deck');
+  hide(player2Deck);
+}
 
-  if (player === game.player1) {
-    unhide(player1Deck);
-  } else if (player === game.player2) {
-    unhide(player2Deck);
-  }
+function showPlayer1Deck() {
+  var player1Deck = document.querySelector('.player-1-deck');
+  unhide(player1Deck);
+}
+
+function showPlayer2Deck() {
+  var player2Deck = document.querySelector('.player-2-deck');
+  unhide(player2Deck);
 }
 
 function hide(element) {
